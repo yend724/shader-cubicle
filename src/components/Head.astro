@@ -1,0 +1,25 @@
+---
+import site from "../data/site.json"
+import GA from "./GA.astro"
+const { title, isTop } = Astro.props as { title: string; isTop?: boolean };
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<title>{title}</title>
+<meta name="description" content={site.meta.description}>
+<meta property="og:site_name" content={site.meta.title}>
+<meta property="og:type" content={isTop ? "website" : "article"}>
+<meta property="og:title" content={site.meta.title}>
+<meta property="og:description" content={site.meta.description}>
+<meta property="og:image" content="https://shader-cubicle.yend.dev/images/common/ogp.png">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:site" content="@yend724">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/common/apple-touch-icon.png">
+<link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/common/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/common/favicon-16x16.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<GA />

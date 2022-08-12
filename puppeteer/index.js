@@ -9,7 +9,7 @@ const puppeteer = require("puppeteer-core");
 
   const browser = await puppeteer.launch({
     headless: true, // フルバージョンのChromeを使用
-    slowMo: 100,
+    // slowMo: 200,
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   });
