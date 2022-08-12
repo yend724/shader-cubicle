@@ -1,45 +1,34 @@
-# Astro Starter Kit: Minimal
+# Shader Cubicle
 
-```
-npm init astro -- --template minimal
-```
+This is the shader practice project using [Three.js](https://threejs.org/).
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
+## Install
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```shell
+$ cd shader-cubicle
+$ yarn install
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Run locally
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Start dev server.
 
-Any static assets, like images, can be placed in the `public/` directory.
+```shell
+$ yarn dev
+```
 
-## 🧞 Commands
+## Build
 
-All commands are run from the root of the project, from a terminal:
+Builds the project for production to the dist folder.
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `npm install`          | Installs dependencies                            |
-| `npm run dev`          | Starts local dev server at `localhost:3000`      |
-| `npm run build`        | Build your production site to `./dist/`          |
-| `npm run preview`      | Preview your build locally, before deploying     |
-| `npm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro --help` | Get help using the Astro CLI                     |
+```shell
+$ yarn build
+```
 
-## 👀 Want to learn more?
+## Preview
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Locally preview production build.
+
+```shell
+$ yarn preview
+```
