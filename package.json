@@ -1,0 +1,27 @@
+{
+  "name": "shader-cubicle",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "scaffdog": "npx scaffdog generate",
+    "pup": "node ./puppeteer/index.js"
+  },
+  "devDependencies": {
+    "@types/three": "^0.143.0",
+    "astro": "^1.0.1",
+    "puppeteer-core": "^16.1.0",
+    "vite-plugin-glsl": "^0.3.0"
+  },
+  "dependencies": {
+    "@astrojs/prism": "^1.0.1",
+    "destyle.css": "^3.0.2",
+    "fast-glob": "^3.2.11",
+    "scaffdog": "^1.5.0",
+    "three": "^0.143.0"
+  }
+}

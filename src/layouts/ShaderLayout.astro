@@ -1,0 +1,92 @@
+---
+import "destyle.css"
+import "../assets/css/prismjs.css"
+import "../assets/css/common.css"
+import Header from "../components/Header.astro"
+import Footer from "../components/Footer.astro"
+const { title, canvas } = Astro.props as { title: string; canvas?: { id?: string, width?: number, height?: number } };
+const c = { id: "webgl", width: 800, height: 800, ...canvas }
+---
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{title} | Shader Cubcle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <Header />
+    <main class="main">
+      <div class="hero">
+        <h1 class="hero__title page-title">{title}</h1>
+      </div>
+      <section class="section">
+        <div class="draw">
+          <canvas id={c.id} class="canvas" width={c.width} height={c.height}></canvas>
+        </div>
+        <div class="code-area">
+          <slot />
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </div>
+</body>
+</html>
+<style>
+  .wrapper {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
+    min-height: 100vh;
+  }
+
+  .page-title {
+    color: var(--color-headline);
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .hero {
+    padding: 2rem;
+    text-align: center
+  }
+
+  .hero__title {
+    max-width: 50rem;
+    margin: 0 auto;
+    font-size: 1.5rem;
+    word-break: break-all;
+  }
+
+  .section {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    padding: 0 2rem;
+  }
+
+  .draw {
+    position: relative;
+    width: 800px;
+    height: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    aspect-ratio: 1/1;
+  }
+
+  .canvas {
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .code-area {
+    max-width: 800px;
+    margin: 5rem auto 0;
+  }
+</style>

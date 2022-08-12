@@ -1,0 +1,55 @@
+---
+import "destyle.css"
+import "../assets/css/common.css"
+import Header from "../components/Header.astro"
+import Footer from "../components/Footer.astro"
+const { title } = Astro.props as { title: string };
+---
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content={Astro.generator} />
+  <title>Shader Cubcle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <Header />
+    <main class="main">
+      <div class="hero">
+        <h1 class="hero__title page-title">{title}</h1>
+      </div>
+      <section class="section">
+        <slot />
+      </section>
+    </main>
+    <Footer />
+  </div>
+</body>
+</html>
+<style>
+  .wrapper {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
+    min-height: 100vh;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .hero {
+    padding: 2rem;
+    text-align: center
+  }
+
+  .section {
+    padding: 2rem
+  }
+</style>

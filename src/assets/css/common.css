@@ -1,0 +1,23 @@
+:root {
+  --color-white: #fff;
+  --color-black: #000;
+  --color-bg: #faeee7;
+  --color-bg-alpha: rgba(250, 238, 231, 0.7);
+  --color-headline: #33272a;
+  --color-paragraph: #594a4e;
+  --color-card-bg: #fffffe;
+  --color-card-headline: #33272a;
+  --color-card-paragraph: #594a4e;
+  --color-button-bg: #ff8ba7;
+  --color-button-hover-bg: #fffffe;
+  --color-button-text: #33272a;
+  --font-family-base: "Roboto", "Noto Sans JP", sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: var(--color-bg);
+  color: var(--color-paragraph);
+  font-family: var(--font-family-base);
+}

@@ -1,0 +1,74 @@
+---
+import route from "../data/route.json";
+import site from "../data/site.json"
+import TopLayout from "../layouts/TopLayout.astro";
+---
+
+<TopLayout title={site.meta.title}>
+  <div class="post-list">
+    {
+      route["pages"].map((page)=>{
+        const text = page.title;
+        const images = text.toLocaleLowerCase().replace(/\s+/g,'-');
+        const link = `/codes/${text.toLocaleLowerCase().replace(/\s+/g,'-')}`
+        return (
+          <a class="post" href={link} data-label={text}>
+            <img class="post-img" src={`/images/codes/${images}.png`} alt={text} />
+          </a>
+        )
+      })
+    }
+  </div>
+</TopLayout>
+<style>
+  .post-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: 1rem;
+    max-width: 64rem;
+    margin: 0 auto;
+  }
+
+  .post {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1/1;
+    padding: 0.5rem;
+    background-color: var(--color-card-bg);
+    color: var(--color-card-headline);
+    font-weight: bold;
+    text-align: center;
+    transition: all .2s ease-out;
+  }
+  .post::before {
+    content: attr(data-label) / "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    font-size: 1.25rem;
+    visibility: hidden;
+    opacity: 0;
+    color: var(--color-white);
+    transition: all .2s ease-out;
+  }
+  @media (hover: hover){
+    .post:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 4px 12px -8px rgba(0,0,0,0.6);
+    }
+    .post:hover::before {
+      visibility: visible;
+      opacity: 1;
+
+    }
+  }
+  .post-img {
+    width: 100%;
+  }
+</style>
