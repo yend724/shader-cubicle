@@ -2,6 +2,7 @@
 import "destyle.css"
 import "../assets/css/prismjs.css"
 import "../assets/css/common.css"
+import GA from "../components/GA.astro"
 import Header from "../components/Header.astro"
 import Footer from "../components/Footer.astro"
 const { title, canvas } = Astro.props as { title: string; canvas?: { id?: string, width?: number, height?: number } };
@@ -17,6 +18,7 @@ const c = { id: "webgl", width: 800, height: 800, ...canvas }
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <GA />
 </head>
 <body>
   <div class="wrapper">
