@@ -1,13 +1,13 @@
 ---
 name: 'shader'
-root: './src'
-output: 'pages/codes'
-ignore: ["./src"]
+root: '.'
+output: './src'
+ignore: ["."]
 questions:
   value: 'Please enter any filename'
 ---
 
-# `{{ inputs.value }}/index.astro`
+# `pages/codes/{{ inputs.value }}/index.astro`
 
 ```astro
 ---
@@ -16,12 +16,12 @@ const url = Astro.url;
 import route from "../../../data/route.json";
 import Code from "../../../components/Code.astro";
 import ShaderLayout from '../../../layouts/ShaderLayout.astro';
-import vertex from "./shaders/vertex.glsl";
-import fragment from "./shaders/fragment.glsl";
+import vertex from "../../../assets/js/{{ inputs.value }}/shaders/vertex.glsl";
+import fragment from "../../../assets/js/{{ inputs.value }}/shaders/fragment.glsl";
 import { getCurrentPage } from "../../../utils/getCurrentPage.ts";
 
 const { title, path } = getCurrentPage({ url, route });
-const script = fs.readFileSync(`${process.cwd()}/src/pages/codes/${path}/index.ts`, "utf8");
+const script = fs.readFileSync(`${process.cwd()}/src/assets/js/${path}/index.ts`, "utf8");
 ---
 
 <ShaderLayout title={title}>
@@ -31,11 +31,11 @@ const script = fs.readFileSync(`${process.cwd()}/src/pages/codes/${path}/index.t
 </ShaderLayout>
 
 <script>
-  import "./index.ts"
+  import "../../../assets/js/{{ inputs.value }}/index.ts"
 </script>
 ```
 
-# `{{ inputs.value }}/index.ts`
+# `assets/js/{{ inputs.value }}/index.ts`
 
 ```ts
 import * as THREE from "three";
@@ -98,7 +98,7 @@ const init = () => {
 window.addEventListener("DOMContentLoaded", init);
 ```
 
-# `{{ inputs.value }}/shaders/vertex.glsl`
+# `assets/js/{{ inputs.value }}/shaders/vertex.glsl`
 
 ```glsl
 void main () {
@@ -106,7 +106,7 @@ void main () {
 }
 ```
 
-# `{{ inputs.value }}/shaders/fragment.glsl`
+# `assets/js/{{ inputs.value }}//shaders/fragment.glsl`
 
 ```glsl
 void main () {
