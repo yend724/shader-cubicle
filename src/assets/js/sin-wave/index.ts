@@ -18,7 +18,7 @@ const init = () => {
 
   const scene = new THREE.Scene();
 
-  const geometry = new THREE.PlaneGeometry(1, 1, 64, 64);
+  const geometry = new THREE.PlaneGeometry(2, 2, 64, 64);
   const material = new THREE.ShaderMaterial({
     vertexShader,
     fragmentShader,
