@@ -1,6 +1,7 @@
 ---
 import "destyle.css"
 import "../assets/css/common.css"
+import site from "../data/site.json"
 import Head from "../components/Head.astro"
 import Header from "../components/Header.astro"
 import Footer from "../components/Footer.astro"
@@ -16,7 +17,8 @@ const { title } = Astro.props as { title: string };
     <Header />
     <main class="main">
       <div class="hero">
-        <h1 class="hero__title page-title">{title}</h1>
+        <h1 class="hero__title">{site.meta.title}</h1>
+        <p class="hero__text">{site.meta.description}</p>
       </div>
       <section class="section">
         <slot />
@@ -34,15 +36,23 @@ const { title } = Astro.props as { title: string };
     min-height: 100vh;
   }
 
-  .page-title {
+
+  .hero {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .hero__title {
+    max-width: 64rem;
+    margin: 0 auto;
     color: var(--color-headline);
     font-size: 1.5rem;
     font-weight: 600;
   }
-
-  .hero {
-    padding: 2rem;
-    text-align: center
+  .hero__text {
+    max-width: 64rem;
+    margin: 1rem auto 0;
+    font-size: 1rem;
   }
 
   .section {
