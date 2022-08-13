@@ -7,7 +7,7 @@ questions:
   value: 'Please enter any filename'
 ---
 
-# `pages/codes/{{ inputs.value }}/index.astro`
+# `pages/code/{{ inputs.value }}/index.astro`
 
 ```astro
 ---

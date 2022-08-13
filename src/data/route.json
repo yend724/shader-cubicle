@@ -3,43 +3,43 @@
     {
       "title": "正方形",
       "path": "square",
-      "category": "codes",
+      "category": "code",
       "date": "20220812"
     },
     {
       "title": "円",
       "path": "circle",
-      "category": "codes",
+      "category": "code",
       "date": "20220812"
     },
     {
       "title": "色のグラデーション",
       "path": "color-gradient",
-      "category": "codes",
+      "category": "code",
       "date": "20220812"
     },
     {
       "title": "時間経過",
       "path": "time",
-      "category": "codes",
+      "category": "code",
       "date": "20220812"
     },
     {
       "title": "テクスチャ",
       "path": "texture",
-      "category": "codes",
+      "category": "code",
       "date": "20220812"
     },
     {
       "title": "sin波",
       "path": "sin-wave",
-      "category": "codes",
+      "category": "code",
       "date": "20220812"
     },
     {
       "title": "色をずらす",
       "path": "color-shift",
-      "category": "codes",
+      "category": "code",
       "date": "20220813"
     }
   ]

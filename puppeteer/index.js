@@ -16,8 +16,8 @@ const puppeteer = require("puppeteer-core");
   });
   const page = await browser.newPage();
   for (let i = 0; i < route.length; i++) {
-    await page.goto(`http://localhost:3000/codes/${route[i]}`);
-    console.log(`opne: http://localhost:3000/codes/${route[i]}`);
+    await page.goto(`http://localhost:3000/code/${route[i]}`);
+    console.log(`open: http://localhost:3000/code/${route[i]}`);
     await page.setViewport({ width: 800, height: 800 });
     await page.waitForSelector("#webgl");
     await page.evaluate(() => {
@@ -31,7 +31,7 @@ const puppeteer = require("puppeteer-core");
         window.scrollTo(0, webgl.getBoundingClientRect().top + 1 - 32);
       }
     });
-    await page.screenshot({ path: `public/images/codes/${route[i]}.png` });
+    await page.screenshot({ path: `public/images/code/${route[i]}.png` });
     console.log("screenshot: " + route[i]);
   }
   console.log("All Success!");
