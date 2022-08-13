@@ -1,10 +1,16 @@
 {
   "pages": [
     {
-      "title": "正方形",
-      "path": "square",
+      "title": "塗りつぶし",
+      "path": "fill",
       "category": "code",
       "date": "20220812"
+    },
+    {
+      "title": "矩形",
+      "path": "rectangle",
+      "category": "code",
+      "date": "20220813"
     },
     {
       "title": "円",
