@@ -19,6 +19,12 @@
       "date": "20220812"
     },
     {
+      "title": "色の混合",
+      "path": "color-mix",
+      "category": "code",
+      "date": "20220813"
+    },
+    {
       "title": "時間経過",
       "path": "time",
       "category": "code",
@@ -31,16 +37,16 @@
       "date": "20220812"
     },
     {
-      "title": "sin波",
-      "path": "sin-wave",
-      "category": "code",
-      "date": "20220812"
-    },
-    {
       "title": "色をずらす",
       "path": "color-shift",
       "category": "code",
       "date": "20220813"
+    },
+    {
+      "title": "sin波",
+      "path": "sin-wave",
+      "category": "code",
+      "date": "20220812"
     }
   ]
 }

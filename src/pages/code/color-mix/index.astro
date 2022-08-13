@@ -1,0 +1,23 @@
+---
+import fs from "fs";
+const url = Astro.url;
+import route from "../../../data/route.json";
+import Code from "../../../components/Code.astro";
+import ShaderLayout from '../../../layouts/ShaderLayout.astro';
+import vertex from "../../../assets/js/color-mix/shaders/vertex.glsl";
+import fragment from "../../../assets/js/color-mix/shaders/fragment.glsl";
+import { getCurrentPage } from "../../../utils/getCurrentPage";
+
+const { title, path } = getCurrentPage({ url, route });
+const script = fs.readFileSync(`${process.cwd()}/src/assets/js/${path}/index.ts`, "utf8");
+---
+
+<ShaderLayout title={title}>
+  <Code lang={"glsl"} label={"vertexShader"} code={vertex} />
+  <Code lang={"glsl"} label={"fragmentShader"} code={fragment} />
+  <Code lang={"ts"} label={"TypeScript"} code={script} />
+</ShaderLayout>
+
+<script>
+  import "../../../assets/js/color-mix/index.ts"
+</script>
