@@ -35,6 +35,12 @@
       "path": "sin-wave",
       "category": "codes",
       "date": "20220812"
+    },
+    {
+      "title": "色をずらす",
+      "path": "color-shift",
+      "category": "codes",
+      "date": "20220813"
     }
   ]
 }
