@@ -1,43 +1,3 @@
----
-name: 'shader'
-root: './src'
-output: 'pages/codes'
-ignore: ["./src"]
-questions:
-  value: 'Please enter any filename'
----
-
-# `{{ inputs.value }}/index.astro`
-
-```astro
----
-import fs from "fs";
-const url = Astro.url;
-import route from "../../../data/route.json";
-import Code from "../../../components/Code.astro";
-import ShaderLayout from '../../../layouts/ShaderLayout.astro';
-import vertex from "./shaders/vertex.glsl";
-import fragment from "./shaders/fragment.glsl";
-import { getCurrentPage } from "../../../utils/getCurrentPage.ts";
-
-const { title, path } = getCurrentPage({ url, route });
-const script = fs.readFileSync(`${process.cwd()}/src/pages/codes/${path}/index.ts`, "utf8");
----
-
-<ShaderLayout title={title}>
-  <Code lang={"glsl"} label={"vertexShader"} code={vertex} />
-  <Code lang={"glsl"} label={"fragmentShader"} code={fragment} />
-  <Code lang={"ts"} label={"TypeScript"} code={script} />
-</ShaderLayout>
-
-<script>
-  import "./index.ts"
-</script>
-```
-
-# `{{ inputs.value }}/index.ts`
-
-```ts
 import * as THREE from "three";
 import vertexShader from "./shaders/vertex.glsl";
 import fragmentShader from "./shaders/fragment.glsl";
@@ -62,6 +22,9 @@ const init = () => {
   const material = new THREE.ShaderMaterial({
     vertexShader,
     fragmentShader,
+    uniforms: {
+      uTick: { value: 0 },
+    },
   });
 
   const mesh = new THREE.Mesh(geometry, material);
@@ -77,7 +40,9 @@ const init = () => {
   renderer.setSize(width, height);
   renderer.setPixelRatio(window.devicePixelRatio);
 
+  const clock = new THREE.Clock();
   const loop = () => {
+    material.uniforms.uTick.value = clock.getElapsedTime();
     renderer.render(scene, camera);
     window.requestAnimationFrame(loop);
   };
@@ -96,20 +61,3 @@ const init = () => {
 };
 
 window.addEventListener("DOMContentLoaded", init);
-```
-
-# `{{ inputs.value }}/shaders/vertex.glsl`
-
-```glsl
-void main () {
-  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
-}
-```
-
-# `{{ inputs.value }}/shaders/fragment.glsl`
-
-```glsl
-void main () {
-  gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
-}
-```

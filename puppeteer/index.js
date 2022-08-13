@@ -2,20 +2,22 @@ const fs = require("fs");
 const puppeteer = require("puppeteer-core");
 
 (async () => {
+  console.log("start");
   const pages = JSON.parse(fs.readFileSync("src/data/route.json", "utf8"));
   const route = pages["pages"].map(v => {
-    return v.title.toLocaleLowerCase().replace(/\s+/g, "-");
+    return v.path.toLocaleLowerCase().replace(/\s+/g, "-");
   });
 
   const browser = await puppeteer.launch({
     headless: true, // フルバージョンのChromeを使用
-    // slowMo: 200,
+    // slowMo: 300,
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   });
   const page = await browser.newPage();
   for (let i = 0; i < route.length; i++) {
     await page.goto(`http://localhost:3000/codes/${route[i]}`);
+    console.log(`opne: http://localhost:3000/codes/${route[i]}`);
     await page.setViewport({ width: 800, height: 800 });
     await page.waitForSelector("#webgl");
     await page.evaluate(() => {

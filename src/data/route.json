@@ -1,32 +1,38 @@
 {
   "pages": [
     {
-      "title": "Square",
+      "title": "正方形",
+      "path": "square",
       "category": "codes",
       "date": "20220812"
     },
     {
-      "title": "Circle",
+      "title": "円",
+      "path": "circle",
       "category": "codes",
       "date": "20220812"
     },
     {
-      "title": "Color Gradient",
+      "title": "色のグラデーション",
+      "path": "color-gradient",
       "category": "codes",
       "date": "20220812"
     },
     {
-      "title": "Tick",
+      "title": "時間経過",
+      "path": "time",
       "category": "codes",
       "date": "20220812"
     },
     {
-      "title": "Texture",
+      "title": "テクスチャ",
+      "path": "texture",
       "category": "codes",
       "date": "20220812"
     },
     {
-      "title": "Sin Wave",
+      "title": "sin波",
+      "path": "sin-wave",
       "category": "codes",
       "date": "20220812"
     }

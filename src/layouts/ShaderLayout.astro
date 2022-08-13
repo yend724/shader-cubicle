@@ -1,11 +1,12 @@
 ---
-import "destyle.css"
-import "../assets/css/prismjs.css"
-import "../assets/css/common.css"
-import site from "../data/site.json"
-import Head from "../components/Head.astro"
-import Header from "../components/Header.astro"
-import Footer from "../components/Footer.astro"
+import "destyle.css";
+import "../assets/css/prismjs.css";
+import "../assets/css/common.css";
+const url = Astro.url;
+import site from "../data/site.json";
+import Head from "../components/Head.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 const { title, canvas } = Astro.props as { title: string; canvas?: { id?: string, width?: number, height?: number } };
 const c = { id: "webgl", width: 800, height: 800, ...canvas }
 ---
