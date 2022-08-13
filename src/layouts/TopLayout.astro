@@ -35,13 +35,10 @@ const { title } = Astro.props as { title: string };
     grid-template-columns: 100%;
     min-height: 100vh;
   }
-
-
   .hero {
     padding: 2rem;
     text-align: center;
   }
-
   .hero__title {
     max-width: 64rem;
     margin: 0 auto;
@@ -54,8 +51,13 @@ const { title } = Astro.props as { title: string };
     margin: 1rem auto 0;
     font-size: 1rem;
   }
-
   .section {
     padding: 2rem
+  }
+  @media screen and (max-width: 767px) {
+    .section {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
 </style>

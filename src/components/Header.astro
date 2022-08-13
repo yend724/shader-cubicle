@@ -3,8 +3,8 @@
 
 <header id="header" class="header">
   <span class="header__item header-title"><a href="/" class="header-link">Shader Cubicle</a></span>
-  <a class="header__item header-sns" href="https://twitter.com/yend724" target="_blank">Twitter</a>
-  <!-- <a class="header__item header-sns" href="https://twitter.com/yend724" target="_blank">GitHub</a> -->
+  <!-- <a class="header__item header-sns" href="https://twitter.com/yend724" target="_blank">Twitter</a> -->
+  <a class="header__item header-sns" href="https://github.com/yend724/shader-cubicle" target="_blank">GitHub</a>
 </header>
 
 <style>
@@ -20,7 +20,6 @@
     backdrop-filter: blur(0.5rem);
     z-index: 1000;
   }
-
   .header-title {
     flex-grow: 1;
     font-size: 1.25rem;
@@ -31,7 +30,7 @@
   }
   .header-sns {
     display: inline-block;
-    padding: .5rem 1rem;
+    padding: 0.4rem 0.6rem;
     background-color: var(--color-button-bg);
     color: var(--color-button-text);
     font-weight: 600;
@@ -41,6 +40,12 @@
   @media (hover: hover) {
     .header-sns:hover {
       background-color: var(--color-button-hover-bg);
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .header {
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
   }
 </style>
