@@ -31,7 +31,7 @@ const init = () => {
   scene.add(mesh);
 
   const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-  camera.position.z = 1;
+  camera.position.z = 2;
   scene.add(camera);
 
   const renderer = new THREE.WebGLRenderer({
