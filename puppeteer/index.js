@@ -32,11 +32,14 @@ const puppeteer = require("puppeteer-core");
           window.scrollTo(0, webgl.getBoundingClientRect().top + 1 - 32);
         }
       });
-      await page.screenshot({ path: `public/images/code/${route[i]}.png` });
-      console.log("screenshot: " + route[i]);
+      if (!fs.existsSync(`public/images/code/${route[i]}.png`)) {
+        await page.screenshot({ path: `public/images/code/${route[i]}.png` });
+        console.log("screenshot: " + route[i]);
+      } else {
+        console.log(route[i] + " is aleady exsit.");
+      }
     }
     console.log("All Success!");
-    await browser.close();
   } catch (error) {
     console.log("error: " + error);
   } finally {
