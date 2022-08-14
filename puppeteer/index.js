@@ -9,16 +9,20 @@ const puppeteer = require("puppeteer-core");
   });
 
   const browser = await puppeteer.launch({
-    headless: false,
-    // slowMo: 300,
+    headless: true,
+    // slowMo: 100,
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   });
   const page = await browser.newPage();
   try {
     for (let i = 0; i < route.length; i++) {
+      if (fs.existsSync(`public/images/code/${route[i]}.png`)) {
+        console.log(route[i] + " is aleady exsit.");
+        continue;
+      }
       await page.goto(`http://localhost:3000/code/${route[i]}`);
-      console.log(`open: http://localhost:3000/code/${route[i]}`);
+      console.log(`【open】http://localhost:3000/code/${route[i]}`);
       await page.setViewport({ width: 800, height: 800 });
       await page.waitForSelector("#webgl");
       await page.evaluate(() => {
@@ -36,14 +40,10 @@ const puppeteer = require("puppeteer-core");
           window.scrollTo(0, webgl.getBoundingClientRect().top + 1);
         }
       });
-      if (!fs.existsSync(`public/images/code/${route[i]}.png`)) {
-        await page.screenshot({ path: `public/images/code/${route[i]}.png` });
-        console.log("screenshot: " + route[i]);
-      } else {
-        console.log(route[i] + " is aleady exsit.");
-      }
+      await page.screenshot({ path: `public/images/code/${route[i]}.png` });
+      console.log("【screenshot】" + route[i]);
     }
-    console.log("All Success!");
+    console.log("Finish!");
   } catch (error) {
     console.log("error: " + error);
   } finally {
