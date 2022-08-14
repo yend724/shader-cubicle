@@ -9,7 +9,7 @@ const puppeteer = require("puppeteer-core");
   });
 
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     // slowMo: 300,
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
@@ -27,9 +27,13 @@ const puppeteer = require("puppeteer-core");
         if (header) {
           header.style.opacity = 0;
         }
+        const section = document.getElementById("section");
+        if (section) {
+          section.style.padding = 0;
+        }
         const webgl = document.getElementById("webgl");
         if (webgl) {
-          window.scrollTo(0, webgl.getBoundingClientRect().top + 1 - 32);
+          window.scrollTo(0, webgl.getBoundingClientRect().top + 1);
         }
       });
       if (!fs.existsSync(`public/images/code/${route[i]}.png`)) {

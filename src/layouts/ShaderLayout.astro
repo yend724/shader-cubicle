@@ -22,14 +22,14 @@ const c = { id: "webgl", width: 800, height: 800, ...canvas }
       <div class="hero">
         <h1 class="hero__title page-title">{title}</h1>
       </div>
-      <section class="section">
+      <div id="section" class="section">
         <div class="draw">
           <canvas id={c.id} class="canvas" width={c.width} height={c.height}></canvas>
         </div>
         <div class="code-area">
           <slot />
         </div>
-      </section>
+      </div>
     </main>
     <Footer />
   </div>
