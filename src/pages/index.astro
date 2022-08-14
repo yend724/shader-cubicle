@@ -13,7 +13,7 @@ import TopLayout from "../layouts/TopLayout.astro";
         return (
           <div class="post">
             <a class="post__link" href={`/code/${path}/`}>
-              <img class="post__img" src={`/images/code/${path}.png`} alt={text} />
+              <img class="post__img" src={`/images/code/${path}.png`} alt={text} width="800" height="800" loading="lazy" decoding="async" />
             </a>
             <p class="post__label"><span class="post__text">{text}</span></p>
           </div>
@@ -54,6 +54,7 @@ import TopLayout from "../layouts/TopLayout.astro";
   }
   .post__img {
     width: 100%;
+    height: auto;
   }
   .post__label {
     margin-top: 1rem;
