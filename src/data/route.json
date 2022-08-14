@@ -3,62 +3,68 @@
     {
       "title": "塗りつぶし",
       "path": "fill",
-      "category": "code",
+      "directory": "code",
       "date": "20220812"
     },
     {
       "title": "矩形",
       "path": "rectangle",
-      "category": "code",
+      "directory": "code",
       "date": "20220813"
     },
     {
       "title": "円",
       "path": "circle",
-      "category": "code",
+      "directory": "code",
       "date": "20220812"
     },
     {
       "title": "色のグラデーション",
       "path": "color-gradient",
-      "category": "code",
+      "directory": "code",
       "date": "20220812"
     },
     {
       "title": "色の混合",
       "path": "color-mix",
-      "category": "code",
+      "directory": "code",
       "date": "20220813"
     },
     {
       "title": "分割",
       "path": "split",
-      "category": "code",
+      "directory": "code",
       "date": "20220814"
     },
     {
       "title": "時間経過",
       "path": "time",
-      "category": "code",
+      "directory": "code",
       "date": "20220812"
     },
     {
       "title": "テクスチャ",
       "path": "texture",
-      "category": "code",
+      "directory": "code",
       "date": "20220812"
     },
     {
       "title": "色をずらす",
       "path": "color-shift",
-      "category": "code",
+      "directory": "code",
       "date": "20220813"
     },
     {
       "title": "sin波",
       "path": "sin-wave",
-      "category": "code",
+      "directory": "code",
       "date": "20220812"
+    },
+    {
+      "title": "cos波",
+      "path": "cos-wave",
+      "directory": "code",
+      "date": "20220814"
     }
   ]
 }
