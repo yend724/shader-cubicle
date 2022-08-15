@@ -17,7 +17,7 @@ const puppeteer = require("puppeteer-core");
   const page = await browser.newPage();
   try {
     for (let i = 0; i < route.length; i++) {
-      if (fs.existsSync(`public/images/code/${route[i]}.png`)) {
+      if (fs.existsSync(`public/images/code/${route[i]}.jpg`)) {
         console.log(route[i] + " is aleady exsit.");
         continue;
       }
@@ -40,7 +40,7 @@ const puppeteer = require("puppeteer-core");
           window.scrollTo(0, webgl.getBoundingClientRect().top + 1);
         }
       });
-      await page.screenshot({ path: `public/images/code/${route[i]}.png` });
+      await page.screenshot({ path: `public/images/code/${route[i]}.jpg` });
       console.log("【screenshot】" + route[i]);
     }
     console.log("Finish!");
