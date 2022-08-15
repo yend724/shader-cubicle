@@ -22,6 +22,7 @@ const init = () => {
   const material = new THREE.ShaderMaterial({
     vertexShader,
     fragmentShader,
+    transparent: true,
   });
 
   const mesh = new THREE.Mesh(geometry, material);
@@ -34,6 +35,7 @@ const init = () => {
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
   });
+  renderer.setClearColor(0x000000, 0);
   renderer.setSize(width, height);
   renderer.setPixelRatio(window.devicePixelRatio);
 
