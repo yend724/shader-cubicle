@@ -4,7 +4,7 @@ type GetCurrentPage = {
     pages: {
       title: string;
       path: string;
-      category: string;
+      directory: string;
       date: string;
     }[];
   };

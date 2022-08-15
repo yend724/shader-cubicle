@@ -10,7 +10,7 @@ const { title, isTop } = Astro.props as { title: string; isTop?: boolean };
 <meta name="description" content={site.meta.description}>
 <meta property="og:site_name" content={site.meta.title}>
 <meta property="og:type" content={isTop ? "website" : "article"}>
-<meta property="og:title" content={site.meta.title}>
+<meta property="og:title" content={title}>
 <meta property="og:description" content={site.meta.description}>
 <meta property="og:image" content="https://shader-cubicle.yend.dev/images/common/ogp.png">
 <meta property="twitter:card" content="summary_large_image">
