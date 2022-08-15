@@ -21,8 +21,8 @@ const puppeteer = require("puppeteer-core");
         console.log(route[i] + " is aleady exsit.");
         continue;
       }
-      await page.goto(`http://localhost:3000/code/${route[i]}`);
-      console.log(`【open】http://localhost:3000/code/${route[i]}`);
+      await page.goto(`http://localhost:3000/code/${route[i]}/`);
+      console.log(`【open】http://localhost:3000/code/${route[i]}/`);
       await page.setViewport({ width: 800, height: 800 });
       await page.waitForSelector("#webgl");
       await page.evaluate(() => {
