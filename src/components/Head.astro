@@ -2,6 +2,8 @@
 import site from "../data/site.json"
 import GA from "./GA.astro"
 const { title, isTop } = Astro.props as { title: string; isTop?: boolean };
+const url = Astro.url;
+const canonicalUrl = url.href.endsWith("/") ? url.href : url.href + "/";
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width" />
@@ -13,8 +15,10 @@ const { title, isTop } = Astro.props as { title: string; isTop?: boolean };
 <meta property="og:title" content={title}>
 <meta property="og:description" content={site.meta.description}>
 <meta property="og:image" content="https://shader-cubicle.yend.dev/images/common/ogp.png">
+<meta property="og:url" content={canonicalUrl} />
 <meta property="twitter:card" content="summary_large_image">
 <meta property="twitter:site" content="@yend724">
+<link rel="canonical" href={canonicalUrl}>
 <link rel="apple-touch-icon" sizes="180x180" href="/images/common/apple-touch-icon.png">
 <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="/images/common/favicon-32x32.png">
