@@ -3,8 +3,7 @@
 
 void main () {
   vec4 mPosition = modelMatrix * vec4(position, 1.0);
-  mPosition.z += (sin(uv.x * PI2) - 1.0);
-  vec4 mvPosition = viewMatrix * mPosition;
-  vec4 mvpPosition = projectionMatrix * mvPosition;
+  mPosition.z = (sin(uv.x * PI2) - 1.0);
+  vec4 mvpPosition = projectionMatrix * viewMatrix * mPosition;
   gl_Position = mvpPosition;
 }
