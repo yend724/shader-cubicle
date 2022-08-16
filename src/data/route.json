@@ -19,6 +19,12 @@
       "date": "20220812"
     },
     {
+      "title": "複数の図形",
+      "path": "multi-shape",
+      "directory": "code",
+      "date": "20220816"
+    },
+    {
       "title": "色のグラデーション",
       "path": "color-gradient",
       "directory": "code",
