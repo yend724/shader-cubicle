@@ -7,7 +7,7 @@ import TopLayout from "../layouts/TopLayout.astro";
 <TopLayout title={site.meta.title}>
   <div class="post-list">
     {
-      route["pages"].map((page)=>{
+      route["pages"].map((page) => {
         const text = page.title;
         const path = page.path;
         return (
@@ -66,5 +66,14 @@ import TopLayout from "../layouts/TopLayout.astro";
   .post__text {
     display: inline-block;
     text-align: left;
+  }
+  @media screen and (max-width: 767px){
+    .post-list {
+      grid-template-columns: repeat(auto-fill, calc((100% - 2rem) / 3));
+    }
+    .post__label {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+    }
   }
 </style>
