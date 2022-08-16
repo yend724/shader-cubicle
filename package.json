@@ -9,12 +9,12 @@
     "preview": "astro preview",
     "astro": "astro",
     "scaffdog": "npx scaffdog generate",
-    "pup": "node ./nscripts/puppeteer/index.js && yarn img",
-    "img": "node ./nscripts/squoosh/index.js"
+    "thumbnail": "node ./nscripts/puppeteer/thumbnail.js",
+    "ogp": "node ./nscripts/puppeteer/ogp.js",
+    "pup": "yarn thumbnail && yarn ogp"
   },
   "devDependencies": {
     "@astrojs/prism": "^1.0.1",
-    "@squoosh/lib": "^0.4.0",
     "@types/three": "^0.143.0",
     "astro": "^1.0.1",
     "fast-glob": "^3.2.11",

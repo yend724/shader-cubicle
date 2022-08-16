@@ -2,18 +2,17 @@ const fs = require("fs");
 const puppeteer = require("puppeteer-core");
 
 (async () => {
-  console.log("Process start!");
+  console.log("Thumbnail process start!");
   const pages = JSON.parse(fs.readFileSync("src/data/route.json", "utf8"));
-  const route = pages["pages"].map(v => {
-    return v.path.toLocaleLowerCase().replace(/\s+/g, "-");
-  });
+  const route = pages["pages"].map(v => v.path);
 
   const browser = await puppeteer.launch({
     headless: true,
-    // slowMo: 100,
+    // slowMo: 1000,
     executablePath:
       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   });
+
   const page = await browser.newPage();
   try {
     for (let i = 0; i < route.length; i++) {
@@ -21,8 +20,9 @@ const puppeteer = require("puppeteer-core");
         console.log(route[i] + " is aleady exsit.");
         continue;
       }
+
       await page.goto(`http://localhost:3000/code/${route[i]}/`);
-      console.log(`【open】http://localhost:3000/code/${route[i]}/`);
+      console.log(`【Open】http://localhost:3000/code/${route[i]}/`);
       await page.setViewport({ width: 800, height: 800 });
       await page.waitForSelector("#webgl");
       await page.evaluate(() => {
@@ -40,12 +40,19 @@ const puppeteer = require("puppeteer-core");
           window.scrollTo(0, webgl.getBoundingClientRect().top + 1);
         }
       });
-      await page.screenshot({ path: `public/images/code/${route[i]}.jpg` });
-      console.log("【screenshot】" + route[i]);
+      await page.screenshot({
+        path: `public/images/code/${route[i]}.jpg`,
+        type: "jpeg",
+      });
+      await page.screenshot({
+        path: `public/images/code/${route[i]}.webp`,
+        type: "webp",
+      });
+      console.log("【Screenshot】" + route[i]);
     }
-    console.log("Finish!");
+    console.log("Thumbnail finish!");
   } catch (error) {
-    console.log("error: " + error);
+    console.log("Error: " + error);
   } finally {
     await browser.close();
   }

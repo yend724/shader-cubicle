@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --color-bg: #faeee7;
+        --color-headline: #33272a;
+        --color-paragraph: #594a4e;
+        --font-family-base: "Roboto", "Noto Sans JP", sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        background-color: var(--color-bg);
+        width: 100%;
+        height: 100%;
+        font-family: var(--font-family-base);
+      }
+      .wrapper {
+        display: grid;
+        place-items: center;
+        width: 100%;
+        height: 100%;
+      }
+      .title {
+        color: var(--color-headline);
+        font-size: 3rem;
+        font-weight: 600;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1 id="title" class="title">Shader Cubicle</h1>
+    </div>
+  </body>
+</html>

@@ -4,6 +4,11 @@ import GA from "./GA.astro"
 const { title, isTop } = Astro.props as { title: string; isTop?: boolean };
 const url = Astro.url;
 const canonicalUrl = url.href.endsWith("/") ? url.href : url.href + "/";
+const path = url.pathname.split("/").filter(x => x !== "");
+let ogpUrl = `${url.origin}/images/common/ogp.png`
+if(path.length > 0){
+  ogpUrl = `${url.origin}/images/code/${path[1]}-ogp.png`;
+}
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width" />
@@ -14,7 +19,7 @@ const canonicalUrl = url.href.endsWith("/") ? url.href : url.href + "/";
 <meta property="og:type" content={isTop ? "website" : "article"}>
 <meta property="og:title" content={title}>
 <meta property="og:description" content={site.meta.description}>
-<meta property="og:image" content="https://shader-cubicle.yend.dev/images/common/ogp.png">
+<meta property="og:image" content={ogpUrl}>
 <meta property="og:url" content={canonicalUrl} />
 <meta property="twitter:card" content="summary_large_image">
 <meta property="twitter:site" content="@yend724">
