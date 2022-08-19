@@ -15,7 +15,7 @@ import TopLayout from "../layouts/TopLayout.astro";
             <a class="post__link" href={`/code/${path}/`}>
               <picture class="picture">
                 <source srcset={`/images/code/${path}.webp`} type="image/webp" />
-                <img class="post__img" src={`/images/code/${path}.jpg`} alt={text} width="800" height="800" loading="lazy" decoding="async" />
+                <img class="post__img" src={`/images/code/${path}.jpg`} alt={text} width="800" height="800" decoding="async" />
               </picture>
             </a>
             <p class="post__label"><span class="post__text">{text}</span></p>
