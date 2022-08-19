@@ -3,6 +3,9 @@ const puppeteer = require("puppeteer-core");
 
 (async () => {
   console.log("Thumbnail process start!");
+  if (!fs.existsSync("temp")) {
+    fs.mkdirSync("temp");
+  }
   const pages = JSON.parse(fs.readFileSync("src/data/route.json", "utf8"));
   const route = pages["pages"].map(v => v.path);
 
@@ -41,11 +44,11 @@ const puppeteer = require("puppeteer-core");
         }
       });
       await page.screenshot({
-        path: `public/images/code/${route[i]}.jpg`,
+        path: `temp/${route[i]}.jpg`,
         type: "jpeg",
       });
       await page.screenshot({
-        path: `public/images/code/${route[i]}.webp`,
+        path: `temp/${route[i]}.webp`,
         type: "webp",
       });
       console.log("【Screenshot】" + route[i]);

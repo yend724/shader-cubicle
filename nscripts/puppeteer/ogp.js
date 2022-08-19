@@ -4,6 +4,9 @@ const puppeteer = require("puppeteer-core");
 
 (async () => {
   console.log("OGP Process start!");
+  if (!fs.existsSync("temp")) {
+    fs.mkdirSync("temp");
+  }
   const pages = JSON.parse(fs.readFileSync("src/data/route.json", "utf8"));
   const route = pages["pages"].filter(v => v.directory === "code");
 
@@ -17,7 +20,6 @@ const puppeteer = require("puppeteer-core");
   const page = await browser.newPage();
 
   await page.goto(`file:${path.resolve(process.cwd(), "src/ogp/index.html")}`);
-
   try {
     for (let i = 0; i < route.length; i++) {
       const currentPage = route[i];
@@ -33,7 +35,7 @@ const puppeteer = require("puppeteer-core");
       }, currentPage);
 
       await page.screenshot({
-        path: `public/images/code/${currentPage.path}-ogp.png`,
+        path: `temp/${currentPage.path}-ogp.png`,
         type: "png",
       });
       console.log(`【Screenshot】${currentPage.path}-ogp`);

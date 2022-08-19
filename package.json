@@ -11,10 +11,12 @@
     "scaffdog": "npx scaffdog generate",
     "thumbnail": "node ./nscripts/puppeteer/thumbnail.js",
     "ogp": "node ./nscripts/puppeteer/ogp.js",
-    "pup": "yarn thumbnail && yarn ogp"
+    "img": "node ./nscripts/squoosh/index.js",
+    "pup": "yarn thumbnail && yarn ogp && yarn img && rm -rf temp"
   },
   "devDependencies": {
     "@astrojs/prism": "^1.0.1",
+    "@squoosh/lib": "^0.4.0",
     "@types/three": "^0.143.0",
     "astro": "^1.0.1",
     "fast-glob": "^3.2.11",
