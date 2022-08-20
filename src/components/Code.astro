@@ -22,12 +22,13 @@ const { code, lang, label } = Astro.props as { code: string; lang: string; label
   }
   .label {
     position: absolute;
-    top: -1.5rem;
+    top: 0;
     display: block;
-    line-height: 1.5;
     padding: 0 0.5rem;
+    border-radius: .25rem .25rem 0 0;
     background-color: #ff9800;
     color: #fff;
-    border-radius: .25rem .25rem 0 0;
+    line-height: 1.5;
+    transform: translateY(-100%);
   }
 </style>
