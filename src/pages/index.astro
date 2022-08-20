@@ -8,16 +8,17 @@ import TopLayout from "../layouts/TopLayout.astro";
   <div class="post-list">
     {
       route["pages"].map((page) => {
-        const { title, path } = page;
+        const text = page.title;
+        const path = page.path;
         return (
           <div class="post">
             <a class="post__link" href={`/code/${path}/`}>
               <picture class="picture">
                 <source srcset={`/images/code/${path}.webp`} type="image/webp" />
-                <img class="post__img" src={`/images/code/${path}.jpg`} alt={title} width="800" height="800" decoding="async" />
+                <img class="post__img" src={`/images/code/${path}.jpg`} alt={text} width="800" height="800" decoding="async" />
               </picture>
             </a>
-            <p class="post__label"><span class="post__text">{title}</span></p>
+            <p class="post__label"><span class="post__text">{text}</span></p>
           </div>
         )
       })
@@ -50,7 +51,7 @@ import TopLayout from "../layouts/TopLayout.astro";
   @media (hover: hover){
     .post__link:hover {
       transform: scale(1.05);
-      box-shadow: 0px 0.25rem 0.75rem -0.5rem rgba(0,0,0,0.6);
+      box-shadow: 0px 4px 12px -8px rgba(0,0,0,0.6);
     }
   }
   .post__img {

@@ -65,8 +65,3 @@ body {
   font-family: var(--font-family-base);
   font-weight: 400;
 }
-@media screen and (max-width: 767px) {
-  body {
-    font-size: 0.75rem;
-  }
-}
