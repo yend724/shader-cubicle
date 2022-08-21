@@ -89,6 +89,12 @@
       "path": "twist",
       "directory": "code",
       "date": "20220815"
+    },
+    {
+      "title": "回転",
+      "path": "rotation",
+      "directory": "code",
+      "date": "20220821"
     }
   ]
 }
