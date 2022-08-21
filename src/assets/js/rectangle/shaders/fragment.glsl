@@ -1,14 +1,10 @@
 varying vec2 vUv;
 
-float rect(vec2 point, vec2 size, vec2 center) {
+float rect(vec2 uv, vec2 size, vec2 center) {
   vec2 harf = size / 2.0;
-  float startX = center.x - harf.x;
-  float endX = center.x + harf.x;
-  float startY = center.y - harf.y;
-  float endY = center.y + harf.y;
-
-  float vertical = step(startX, point.x) - step(endX, point.x);
-  float horizontal = step(startY, point.y) - step(endY, point.y);
+  vec2 point = uv - center;
+  float vertical = step(-harf.x, point.x) - step(harf.x, point.x);
+  float horizontal = step(-harf.y, point.y) - step(harf.y, point.y);
   return  vertical * horizontal;
 }
 
