@@ -29,27 +29,25 @@ const labelStyle = (theme: Theme) => css`
 const Home: NextPageWithLayout = () => {
   return (
     <div css={mainStyle}>
-      <ul>
-        {LEAENING_PATH.map(path => {
-          return (
-            <li key={path.href} css={itemStyle}>
-              <Link href={`/learning/${path.href}`} passHref>
-                <a>
-                  <div css={imgContinerStyle}>
-                    <Image
-                      src="/img/thumb/preparation-thumb.png"
-                      width={200}
-                      height={200}
-                      alt=""
-                    />
-                  </div>
-                  <p css={labelStyle}>{path.label}</p>
-                </a>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+      {LEAENING_PATH.map(path => {
+        return (
+          <article key={path.href} css={itemStyle}>
+            <Link href={`/learning/${path.href}`} passHref>
+              <a>
+                <div css={imgContinerStyle}>
+                  <Image
+                    src="/img/thumb/preparation-thumb.png"
+                    width={200}
+                    height={200}
+                    alt=""
+                  />
+                </div>
+                <h2 css={labelStyle}>{path.label}</h2>
+              </a>
+            </Link>
+          </article>
+        );
+      })}
     </div>
   );
 };

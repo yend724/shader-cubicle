@@ -14,7 +14,6 @@ const nextConfig = withMDX({
   reactStrictMode: true,
   swcMinify: true,
   pageExtensions: ['page.tsx', 'page.mdx'],
-  outDir: 'dist',
   webpack: (config, options) => {
     config.module.rules.push({
       test: /\.(glsl|frag|vert)$/,

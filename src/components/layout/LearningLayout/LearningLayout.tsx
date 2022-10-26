@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
 import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
@@ -34,9 +35,13 @@ type Props = {
   children: React.ReactNode;
 };
 export const LearningLayout: React.FC<Props> = ({ children, title }) => {
+  const router = useRouter();
   return (
     <>
-      <LearningHead title={`${title} | ${SITE_DATA.siteName}`} url="path" />
+      <LearningHead
+        title={`${title} | ${SITE_DATA.siteName}`}
+        url={router.pathname}
+      />
       <div css={layoutStyle} data-page={'learning'}>
         <Header />
         <div css={innerStyle}>
