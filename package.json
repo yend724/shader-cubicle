@@ -1,31 +1,50 @@
 {
   "name": "shader-cubicle",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "scaffdog": "npx scaffdog generate",
-    "thumbnail": "node ./nscripts/puppeteer/thumbnail.js",
-    "ogp": "node ./nscripts/puppeteer/ogp.js",
-    "img": "node ./nscripts/squoosh/index.js",
-    "pup": "yarn thumbnail && yarn ogp && yarn img && rm -rf temp"
-  },
-  "devDependencies": {
-    "@astrojs/prism": "^1.0.1",
-    "@squoosh/lib": "^0.4.0",
-    "@types/three": "^0.143.0",
-    "astro": "^1.0.1",
-    "fast-glob": "^3.2.11",
-    "puppeteer-core": "^16.1.0",
-    "scaffdog": "^1.5.0",
-    "vite-plugin-glsl": "^0.3.0"
+    "dev": "next dev",
+    "build": "next build && next export -o dist && next-export-optimize-images",
+    "start": "next start",
+    "serve": "serve ./dist",
+    "lint": "next lint",
+    "generate": "npx scaffdog generate"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.1.0",
+    "@emotion/babel-plugin": "^11.10.2",
+    "@emotion/react": "^11.10.4",
+    "@mapbox/rehype-prism": "^0.8.0",
+    "@mdx-js/loader": "^2.1.5",
+    "@mdx-js/react": "^2.1.5",
+    "@next/mdx": "^12.3.1",
+    "@react-three/drei": "^9.36.0",
+    "@react-three/fiber": "^8.8.10",
+    "@types/three": "^0.144.0",
+    "@uiw/codemirror-theme-github": "^4.12.4",
+    "@uiw/react-codemirror": "^4.12.4",
     "destyle.css": "^3.0.2",
-    "three": "^0.143.0"
+    "glslify-loader": "^2.0.0",
+    "next": "12.3.1",
+    "open-props": "^1.4.16",
+    "prismjs": "^1.29.0",
+    "raw-loader": "^4.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "remark-prism": "^1.3.6",
+    "sass": "^1.55.0",
+    "three": "^0.145.0"
+  },
+  "devDependencies": {
+    "@types/gtag.js": "^0.0.12",
+    "@types/node": "18.11.2",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "eslint": "8.25.0",
+    "eslint-config-next": "12.3.1",
+    "next-export-optimize-images": "^1.9.0",
+    "scaffdog": "^2.4.0",
+    "serve": "^14.0.1",
+    "typescript": "4.8.4"
   }
 }

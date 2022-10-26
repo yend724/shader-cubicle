@@ -1,0 +1,30 @@
+@import 'open-props/style';
+
+:root {
+  --window-w: 100vw;
+  --window-h: 100vh;
+  --font-family-base: 'Roboto', 'Noto Sans JP', sans-serif;
+  --font-weight-base: 400;
+  --font-weight-bold: 700;
+  --color-white: #fff;
+  --color-black: #000;
+  --color-bg: var(--gray-1);
+  --color-text: var(--gray-9);
+  --color-divider: var(--gray-6);
+  --max-width-main: 800px;
+  &.dark {
+    --color-bg: var(--gray-9);
+    --color-text: var(--gray-1);
+  }
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-base);
+  line-height: 1.5;
+}

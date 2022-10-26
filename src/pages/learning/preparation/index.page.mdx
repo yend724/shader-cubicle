@@ -1,0 +1,78 @@
+import { LearningLayout } from '@/components/layout/LearningLayout';
+import { ShaderCodeMirrorWithCanvas } from "@/components/ui/ShaderCodeMirrorWithCanvas";
+export const meta = {
+  title: "Shaderを描くための準備",
+  publishedDate: "2022-10-26",
+  author: "YEND",
+  tag: ["vetexShader", "fragmentShader"]
+}
+export default ({ children }) => (
+  <LearningLayout title={meta.title}>{children}</LearningLayout>
+);
+
+# {meta.title}
+
+[React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)を使用してShaderを描くための下準備をする。
+
+本記事ではざっくり以下のようなコードを書いている。スタイルに関しては[Emotion](https://emotion.sh/docs/introduction)を使用。
+
+```tsx
+import { css } from '@emotion/react';
+import { Canvas } from '@react-three/fiber';
+
+// 視野角からCameraのZ軸の距離を計算
+// CanvasのサイズにPlaneオブジェクトを合わせる
+const calcDistFromFov = (fov: number): number => {
+  const fovRad = (fov / 2) * (Math.PI / 180);
+  return 2 / 2 / Math.tan(fovRad);
+};
+const App = () => {
+return (
+  <Canvas
+    css={css`
+      width: 100%;
+      aspect-ratio: 1/1;
+    `}
+    camera={{
+      fov: 60,
+      near: 0.1,
+      far: 1000,
+      position: [0, 0, calcDistFromFov(60)],
+    }}
+  >
+    <mesh>
+      <planeGeometry args={[2, 2, 64, 64]} />
+      {/* vertexShader と fragmetSahader　を渡す */}
+      <shaderMaterial
+        vertexShader={`...`}
+        fragmentShader={`...`}
+        wireframe={true}
+      />
+    </mesh>
+  </Canvas>
+)}
+```
+
+マテリアルとジオメトリについては以下のドキュメントを参照。
+
+- [PlaneGeometry](https://threejs.org/docs/index.html?q=plane#api/en/geometries/PlaneGeometry)
+- [ShaderMaterial](https://threejs.org/docs/index.html?q=shader#api/en/materials/ShaderMaterial)
+
+
+## 実行結果
+
+実行結果が以下になる。`Planeジオメトリ`の`Segment`の数がわかりやすいように`wireframe={true}`とした。
+
+サンプルのシェーダーコードを書き換えることで、変更が反映される。
+
+<ShaderCodeMirrorWithCanvas
+  vertexShader={`void main () {
+  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
+}`}
+  fragmentShader={`void main () {
+  gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+}`}
+  wireframe={true}
+/>
+
+以上でShaderを描くための下準備ができた。

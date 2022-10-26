@@ -19,7 +19,7 @@ $ yarn dev
 
 ## Build
 
-Builds the project for production to the dist folder.
+Builds the project for production to the dist folder([Static HTML Export](https://nextjs.org/docs/advanced-features/static-html-export)).
 
 ```shell
 $ yarn build
@@ -30,5 +30,5 @@ $ yarn build
 Locally preview production build.
 
 ```shell
-$ yarn preview
+$ yarn serve
 ```
