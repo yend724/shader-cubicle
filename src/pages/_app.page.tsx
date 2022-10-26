@@ -22,9 +22,9 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
     };
   }, [router.events]);
 
-  return getLayout(
+  return (
     <StyleThemeProvider>
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </StyleThemeProvider>
   );
 };
