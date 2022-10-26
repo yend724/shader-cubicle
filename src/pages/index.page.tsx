@@ -5,6 +5,14 @@ import { css, Theme } from '@emotion/react';
 import { TopLayout } from '@/components/layout/TopLayout';
 import { SITE_DATA } from '@/constants/site';
 import { LEAENING_PATH } from '@/constants/path';
+import { getAllPahtMaps } from '@/interfaces/api';
+
+export const getStaticProps = async () => {
+  const pathMaps = await getAllPahtMaps();
+  return {
+    props: pathMaps,
+  };
+};
 
 const mainStyle = (theme: Theme) => css`
   display: grid;
@@ -57,11 +65,30 @@ const labelTextStyle = css`
   text-align: left;
 `;
 
-const Home: NextPageWithLayout = () => {
+type Props = {
+  pathMaps: Record<
+    string,
+    {
+      path: string;
+      meta: {
+        title: string;
+        published: string;
+        updated?: string | undefined;
+        author: string;
+        tag: string[];
+        draft?: boolean | undefined;
+        order?: number;
+      };
+    }
+  >;
+};
+const Home: NextPageWithLayout<Props> = ({ pathMaps }) => {
   return (
     <div css={mainStyle}>
-      {LEAENING_PATH.map(post => {
-        const { path, title } = post;
+      {LEAENING_PATH.map(p => {
+        const { path } = p;
+        const { meta } = pathMaps[path];
+        const { title } = meta;
         return (
           <article key={path} css={articleStyle}>
             <Link href={`/learning/${path}`} passHref>
