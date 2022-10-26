@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { LearningHead } from '@/components/feature/learning/LearningHead';
@@ -14,9 +14,9 @@ const innerStyle = css`
   flex-grow: 1;
   display: flex;
 `;
-const mainStyle = css`
+const mainStyle = (theme: Theme) => css`
   flex-grow: 1;
-  padding: 2rem 1rem;
+  padding: ${theme.spacing(8, 4)};
   overflow-x: hidden;
 `;
 const articleStyle = css`
@@ -27,7 +27,11 @@ const articleStyle = css`
 const containerStyle = css`
   position: relative;
   width: 100%;
-  margin: 0 auto;
+  margin: 4rem auto 0;
+`;
+const titleStyle = css`
+  font-size: 2rem;
+  font-weight: var(--font-weight-bold);
 `;
 
 type Props = {
@@ -47,6 +51,7 @@ export const LearningLayout: React.FC<Props> = ({ children, title }) => {
         <div css={innerStyle}>
           <main css={mainStyle}>
             <article css={articleStyle}>
+              <h1 css={titleStyle}>{title}</h1>
               <div css={containerStyle} data-written-by="markdown">
                 {children}
               </div>

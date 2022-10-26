@@ -25,6 +25,7 @@
     "@uiw/react-codemirror": "^4.12.4",
     "destyle.css": "^3.0.2",
     "glslify-loader": "^2.0.0",
+    "gray-matter": "^4.0.3",
     "next": "12.3.1",
     "open-props": "^1.4.16",
     "prismjs": "^1.29.0",

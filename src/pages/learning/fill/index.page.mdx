@@ -1,0 +1,48 @@
+import { LearningLayout } from '@/components/layout/LearningLayout';
+import { ShaderCodeMirrorWithCanvas } from "@/components/ui/ShaderCodeMirrorWithCanvas";
+
+export const meta = {
+  title: "色を塗りつぶす",
+  published: "2022-10-26",
+  author: "YEND",
+  tag: ["fragmentShader"]
+}
+export default ({ children }) => (
+  <LearningLayout title={meta.title}>{children}</LearningLayout>
+);
+
+まずは単色で塗りつぶしてみる。
+
+色を変更するためには`fragmentShader`を書き換えてみれば良い。
+
+```glsl
+void main () {
+  // vec4型には4つの引数がある
+  // 黒色が表示される
+  gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+}
+```
+
+`gl_FragColor`には4次元ベクトルのvec4型が格納されている。四つの引数はそれぞれ、赤（Red）、緑（Green）、青（Blue）、透過度（Alpha）に対応している。
+
+```glsl
+void main () {
+  // vec4(Red, Green, Blue, Alpha)
+  // これは水色になる
+  gl_FragColor = vec4(0.0, 1.0, 1.0, 1.0);
+}
+```
+
+## 実行結果
+
+実際に`fragmentShader`を書き換えてみると、色が変更されるのがわかる。
+
+<ShaderCodeMirrorWithCanvas
+  vertexShader={`void main () {
+  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
+}`}
+  vertexHidden={true}
+  fragmentShader={`void main () {
+  gl_FragColor = vec4(0.0, 1.0, 1.0, 1.0);
+}`}
+/>
