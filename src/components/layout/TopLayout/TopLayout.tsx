@@ -18,7 +18,7 @@ export const TopLayout: React.FC<Props> = ({ title, children }) => {
   return (
     <div css={WrapperStyle}>
       <HomeHead title={title} />
-      <Header />
+      <Header isHome />
       <main>{children}</main>
       <Footer />
     </div>

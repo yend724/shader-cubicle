@@ -1,3 +1,4 @@
+import { createElement } from 'react';
 import Link from 'next/link';
 import { css, Theme } from '@emotion/react';
 import { SITE_DATA } from '@/constants/site';
@@ -32,14 +33,22 @@ const iconLinkStyle = css`
   text-shadow: 1px 1px 0 var(--color-bg), -1px -1px 0 var(--color-bg),
     -1px 1px 0 var(--color-bg), 1px -1px 0 var(--color-bg);
 `;
-export const Header = () => {
+
+export type HeaderProps = {
+  isHome?: boolean;
+};
+export const Header: React.FC<HeaderProps> = ({ isHome = false }) => {
   return (
     <header css={headerStyle}>
-      <Link href="/" passHref>
-        <a>
-          <h1 css={titleStyle}>{SITE_DATA.siteName}</h1>
-        </a>
-      </Link>
+      {isHome ? (
+        <h1 css={titleStyle}>{SITE_DATA.siteName}</h1>
+      ) : (
+        <Link href="/" passHref>
+          <a>
+            <p css={titleStyle}>{SITE_DATA.siteName}</p>
+          </a>
+        </Link>
+      )}
       <div css={socialStyle}>
         <a href={SITE_DATA.twitter} css={iconLinkStyle}>
           Twitter
