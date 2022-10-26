@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "export": "next build && next export && next-export-optimize-images",
+    "build": "next build && next export -o dist && next-export-optimize-images",
     "start": "next start",
-    "serve": "serve ./out",
+    "serve": "serve ./dist",
     "lint": "next lint",
     "generate": "npx scaffdog generate"
   },

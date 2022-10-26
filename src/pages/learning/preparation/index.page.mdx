@@ -1,11 +1,20 @@
 import { LearningLayout } from '@/components/layout/LearningLayout';
 import { ShaderCodeMirrorWithCanvas } from "@/components/ui/ShaderCodeMirrorWithCanvas";
+export const meta = {
+  title: "Shaderを描くための準備",
+  publishedDate: "2022-10-26",
+  author: "YEND",
+  tag: ["vetexShader", "fragmentShader"]
+}
+export default ({ children }) => (
+  <LearningLayout title={meta.title}>{children}</LearningLayout>
+);
 
-# Shaderを描くための準備
+# {meta.title}
 
 [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)を使用してShaderを描くための下準備をする。
 
-本記事ではざっくり以下のようなコードを書いている。CSSに関しては[Emotion](https://emotion.sh/docs/introduction)を使用。
+本記事ではざっくり以下のようなコードを書いている。スタイルに関しては[Emotion](https://emotion.sh/docs/introduction)を使用。
 
 ```tsx
 import { css } from '@emotion/react';
@@ -50,11 +59,11 @@ return (
 - [ShaderMaterial](https://threejs.org/docs/index.html?q=shader#api/en/materials/ShaderMaterial)
 
 
-## 実行結果を確認してみる
+## 実行結果
 
-`Planeジオメトリ`の`Segment`の数がわかりやすいように`wireframe={true}`とした実行結果が以下になる。
+実行結果が以下になる。`Planeジオメトリ`の`Segment`の数がわかりやすいように`wireframe={true}`とした。
 
-サンプルコードをコードを書き換えることでShaderの実行結果を確認できる。
+サンプルのシェーダーコードを書き換えることで、変更が反映される。
 
 <ShaderCodeMirrorWithCanvas
   vertexShader={`void main () {
@@ -66,11 +75,4 @@ return (
   wireframe={true}
 />
 
-export const meta = {
-  title: "Shaderを描くための準備"
-}
-export default ({ children }) => (
-  <LearningLayout title={meta.title}>{children}</LearningLayout>
-);
-
-以上で下準備ができた。
+以上でShaderを描くための下準備ができた。

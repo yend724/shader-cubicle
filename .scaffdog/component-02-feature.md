@@ -4,10 +4,11 @@ root: 'src/components/feature'
 output: '.'
 ignore: []
 questions:
+  feature: 'Please enter feautre.'
   name: 'Please enter component name.'
 ---
 
-# `{{ inputs.name | pascal }}/{{ inputs.name | pascal }}.tsx`
+# `{{ inputs.feature | camel }}/{{ inputs.name | pascal }}/{{ inputs.name | pascal }}.tsx`
 
 ```tsx
 type Props = {};
@@ -16,7 +17,7 @@ export const {{ inputs.name | pascal }}: React.FC<Props> = () => {
 };
 ```
 
-# `{{ inputs.name | pascal }}/index.tsx`
+# `{{ inputs.feature | camel }}/{{ inputs.name | pascal }}/index.tsx`
 
 ```tsx
 export * from './{{ inputs.name | pascal }}';
