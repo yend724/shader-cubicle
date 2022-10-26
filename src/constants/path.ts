@@ -14,7 +14,7 @@ export const LEAENING_PATH: LearningPath = [
     tag: ['vetexShader', 'fragmentShader'],
   },
   {
-    title: '色を塗りつぶす',
+    title: '単色で塗りつぶす',
     path: 'fill',
     published: '2022-10-26',
     author: 'YEND',

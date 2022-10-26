@@ -11,7 +11,7 @@ export default ({ children }) => (
   <LearningLayout title={meta.title}>{children}</LearningLayout>
 );
 
-[React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)を使用してShaderを描くための下準備をする。
+[React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)を使用してShaderを描くための準備をする。
 
 本記事ではざっくり以下のようなコードを書いている。スタイルに関しては[Emotion](https://emotion.sh/docs/introduction)を使用。
 
@@ -60,7 +60,7 @@ return (
 
 ## 実行結果
 
-実行結果が以下になる。`Planeジオメトリ`の`Segment`の数がわかりやすいように`wireframe={true}`とした。
+実行結果は以下になる。`Planeジオメトリ`の`Segment`の数がわかりやすいように`wireframe={true}`とした。
 
 サンプルのシェーダーコードを書き換えることで、変更が反映される。
 
@@ -74,4 +74,4 @@ return (
   wireframe={true}
 />
 
-以上でShaderを描くための下準備ができた。
+以上でShaderを描くための準備ができた。
