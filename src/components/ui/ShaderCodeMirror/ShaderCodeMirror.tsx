@@ -1,4 +1,4 @@
-import { css, Theme } from '@emotion/react';
+import { css } from '@emotion/react';
 import CodeMirror, { ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import { githubDark } from '@uiw/codemirror-theme-github';
 

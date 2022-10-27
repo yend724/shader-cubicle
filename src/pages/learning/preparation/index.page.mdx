@@ -1,5 +1,6 @@
 import { LearningLayout } from '@/components/layout/LearningLayout';
 import { ShaderCodeMirrorWithCanvas } from "@/components/ui/ShaderCodeMirrorWithCanvas";
+import { vertexShader, fragmentShader } from "./shaders.ts"
 
 export const meta = {
   title: "Shaderを描くための準備",
@@ -11,12 +12,12 @@ export default ({ children }) => (
   <LearningLayout meta={meta}>{children}</LearningLayout>
 );
 
-[React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)を使用してShaderを描くための準備をする。
 
-本記事ではざっくり以下のようなコードを書いている。スタイルに関しては[Emotion](https://emotion.sh/docs/introduction)を使用。
+本記事ではShaderを描くための準備をする。
+
+Shaderを描くにはいくつか選択肢ががあるが、本サイトでは基本的に[React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)を使用する。ざっくり以下のようなコードを書いている。
 
 ```tsx
-import { css } from '@emotion/react';
 import { Canvas } from '@react-three/fiber';
 
 // 視野角からCameraのZ軸の距離を計算
@@ -25,13 +26,10 @@ const calcDistFromFov = (fov: number): number => {
   const fovRad = (fov / 2) * (Math.PI / 180);
   return 2 / 2 / Math.tan(fovRad);
 };
+
 const App = () => {
 return (
   <Canvas
-    css={css`
-      width: 100%;
-      aspect-ratio: 1/1;
-    `}
     camera={{
       fov: 60,
       near: 0.1,
@@ -45,7 +43,6 @@ return (
       <shaderMaterial
         vertexShader={`...`}
         fragmentShader={`...`}
-        wireframe={true}
       />
     </mesh>
   </Canvas>
@@ -57,21 +54,45 @@ return (
 - [PlaneGeometry](https://threejs.org/docs/index.html?q=plane#api/en/geometries/PlaneGeometry)
 - [ShaderMaterial](https://threejs.org/docs/index.html?q=shader#api/en/materials/ShaderMaterial)
 
+## ハローワールドしてみる
 
-## 実行結果
+とりあえずハローワールドということで最初のシェーダーを書いてみよう。一旦細かいことは置いておいて頂点シェーダー（Vertex Shader）とフラグメントシェーダー（Fragment Shader）を次のように記述してみる。
 
-実行結果は以下になる。`Planeジオメトリ`の`Segment`の数がわかりやすいように`wireframe={true}`とした。
+```glsl[data-label="vertexShader"]
+void main () {
+  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
+}
+```
 
-サンプルのシェーダーコードを書き換えることで、変更が反映される。
+```glsl[data-label="fragmentShader"]
+void main () {
+  gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+}
+```
+
+実行結果は以下になる。
 
 <ShaderCodeMirrorWithCanvas
-  vertexShader={`void main () {
-  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
-}`}
-  fragmentShader={`void main () {
-  gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-}`}
-  wireframe={true}
+  material={{
+    vertexShader: vertexShader,
+    fragmentShader: fragmentShader,
+  }}
 />
 
-以上でShaderを描くための準備ができた。
+黒色のCanvasが表示された。これが本サイトにおける最初のシェーダーコードである。
+
+`gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);`の部分を`gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);`に変更してみる。Canvasが赤色に変化すれば、本記事における準備は完了である。
+
+## セグメント
+
+ちなみに`PlaneGeometry`に渡している値を確認するとわかるが、このジオメトリは縦横それぞれに64分割されている。`wireframe`オブションを`true`にしてみるとわかりやすいので、以下で確認する。
+
+<ShaderCodeMirrorWithCanvas
+  material={{
+    vertexShader: vertexShader,
+    fragmentShader: fragmentShader,
+    wireframe: true
+  }}
+/>
+
+ワイヤーフレーム状態にすることセグメントの数が確認できた。

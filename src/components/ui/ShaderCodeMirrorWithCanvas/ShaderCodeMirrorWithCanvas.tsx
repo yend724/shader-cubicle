@@ -1,27 +1,25 @@
 import { css } from '@emotion/react';
 import { ShaderCodeMirror } from '@/components/ui/ShaderCodeMirror';
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas, useThree, ThreeElements } from '@react-three/fiber';
 import { useShader } from './hooks';
 import { calcDistFromFov } from './utils';
 
 type MeshProps = {
-  vertexShader: string;
-  fragmentShader: string;
-  wireframe?: boolean;
+  mesh?: ThreeElements['mesh'];
+  geometry?: ThreeElements['planeGeometry'];
+  material?: ThreeElements['shaderMaterial'];
 };
 const Mesh: React.FC<MeshProps> = ({
-  vertexShader,
-  fragmentShader,
-  wireframe = false,
+  mesh,
+  geometry = { args: [2, 2, 64, 64] },
+  material,
 }) => {
   const { gl, scene, camera } = useThree();
   return (
-    <mesh>
-      <planeGeometry args={[2, 2, 64, 64]} />
+    <mesh {...mesh}>
+      <planeGeometry {...geometry} />
       <shaderMaterial
-        vertexShader={vertexShader}
-        fragmentShader={fragmentShader}
-        wireframe={wireframe}
+        {...material}
         onUpdate={v => {
           if (v.isShaderMaterial) {
             gl.compile(scene, camera);
@@ -37,22 +35,25 @@ const blockStyle = css`
 `;
 
 type Props = {
-  vertexShader: string;
-  fragmentShader: string;
+  mesh?: ThreeElements['mesh'];
+  geometry?: ThreeElements['planeGeometry'];
+  material?: ThreeElements['shaderMaterial'];
   vertexHidden?: boolean;
   fragmentHidden?: boolean;
-  wireframe?: boolean;
 };
 export const ShaderCodeMirrorWithCanvas: React.FC<Props> = ({
-  vertexShader,
-  fragmentShader,
-  wireframe = false,
+  mesh,
+  geometry,
+  material,
   vertexHidden = false,
   fragmentHidden = false,
 }) => {
-  const { shader: vShader, onChange: onVertexChange } = useShader(vertexShader);
-  const { shader: fShader, onChange: onFragmentChange } =
-    useShader(fragmentShader);
+  const { shader: vShader, onChange: onVertexChange } = useShader(
+    material?.vertexShader || ''
+  );
+  const { shader: fShader, onChange: onFragmentChange } = useShader(
+    material?.fragmentShader || ''
+  );
   return (
     <>
       <Canvas
@@ -68,16 +69,20 @@ export const ShaderCodeMirrorWithCanvas: React.FC<Props> = ({
         }}
       >
         <Mesh
-          vertexShader={vShader}
-          fragmentShader={fShader}
-          wireframe={wireframe}
+          mesh={mesh}
+          geometry={geometry}
+          material={{
+            ...material,
+            vertexShader: vShader,
+            fragmentShader: fShader,
+          }}
         />
       </Canvas>
       {!vertexHidden && (
         <div css={blockStyle}>
           <ShaderCodeMirror
             label="vertexShader"
-            shader={vertexShader}
+            shader={vShader}
             height="auto"
             onChange={onVertexChange}
           />

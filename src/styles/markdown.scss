@@ -93,13 +93,10 @@
         display: block;
         padding: 0.25em 0.5em;
         border-radius: 0.25rem;
-        border: 1px solid var(--color-accent-bg);
-        color: var(--color-accent-bg);
         font-size: 0.75rem;
         line-height: 1.5;
-        transition: all 0.2s ease-out;
-        opacity: 1;
-        visibility: visible;
+        color: var(--gray-7);
+        background-color: var(--gray-2);
       }
       // @media (hover: hover) {
       //   &:hover {
