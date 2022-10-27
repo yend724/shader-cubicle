@@ -18,13 +18,12 @@ export default ({ children }) => (
 
 ```glsl
 void main () {
-  // vec4型には4つの引数がある
   // 黒色が表示される
   gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 }
 ```
 
-`gl_FragColor`には4次元ベクトルのvec4型が格納されている。四つの引数はそれぞれ、赤（Red）、緑（Green）、青（Blue）、透過度（Alpha）に対応している。
+`gl_FragColor`には4次元ベクトルのvec4型が格納されている。四つの引数はそれぞれ、Red（赤）、Green（緑）、Blue（青）、Alpha（透過度）に対応している。
 
 ```glsl
 void main () {
