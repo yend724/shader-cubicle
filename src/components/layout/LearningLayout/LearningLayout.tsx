@@ -11,39 +11,32 @@ const layoutStyle = css`
   flex-direction: column;
   min-height: var(--window-h, 100vh);
 `;
-const innerStyle = css`
-  flex-grow: 1;
-  display: flex;
-`;
 const mainStyle = (theme: Theme) => css`
   flex-grow: 1;
-  padding: ${theme.spacing(8, 4)};
+  padding: ${theme.spacing(8, 4, 12)};
   overflow-x: hidden;
 `;
 const articleStyle = css`
   width: 100%;
   max-width: var(--max-width-main);
-  margin: 0 auto;
+  margin-inline: auto;
 `;
-const containerStyle = css`
+const containerStyle = (theme: Theme) => css`
   position: relative;
   width: 100%;
-  margin: 4rem auto 0;
+  margin-top: ${theme.spacing(16)};
 `;
 const infoStyle = (theme: Theme) => css`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: ${theme.spacing(4)};
-  flex-wrap: wrap;
-`;
-const titleStyle = (theme: Theme) => css`
   margin-top: ${theme.spacing(4)};
-  font-size: 2rem;
-  font-weight: var(--font-weight-bold);
+  border-bottom: 1px solid var(--color-divider);
+  padding-bottom: ${theme.spacing(4)};
 `;
-const shareStyle = css`
-  display: inline-block;
-  /* color: var(--color-tw); */
+const titleStyle = css`
+  font-size: 2rem;
   font-weight: var(--font-weight-bold);
 `;
 
@@ -61,8 +54,9 @@ export const LearningLayout: React.FC<Props> = ({ children, meta }) => {
   const router = useRouter();
   const { title, published } = meta;
   const [year, month, date] = published.split('-');
-  const formattedPublished = `${year}年${month}月${date}日`;
+  const formattedPublished = `${year}.${month}.${date}`;
   const twitterShareUrl = `https://${SITE_DATA.domain}${router.pathname}`;
+  const twitterShareText = encodeURI(`${title} | ${SITE_DATA.siteName}`);
 
   return (
     <div css={layoutStyle} data-page={'learning'}>
@@ -71,28 +65,24 @@ export const LearningLayout: React.FC<Props> = ({ children, meta }) => {
         url={router.pathname}
       />
       <Header />
-      <div css={innerStyle}>
-        <main css={mainStyle}>
-          <article css={articleStyle}>
-            <div css={infoStyle}>
-              <span>
-                <time dateTime={published}>{formattedPublished}</time>公開
-              </span>
-              <span css={shareStyle}>
-                <TwitterShareLink
-                  url={twitterShareUrl}
-                  text={title}
-                  via="yend724"
-                />
-              </span>
-            </div>
-            <h1 css={titleStyle}>{title}</h1>
-            <div css={containerStyle} data-written-by="markdown">
-              {children}
-            </div>
-          </article>
-        </main>
-      </div>
+      <main css={mainStyle}>
+        <article css={articleStyle}>
+          <h1 css={titleStyle}>{title}</h1>
+          <div css={infoStyle}>
+            <span>
+              公開日 <time dateTime={published}>{formattedPublished}</time>
+            </span>
+            <TwitterShareLink
+              url={twitterShareUrl}
+              text={twitterShareText}
+              via="yend724"
+            />
+          </div>
+          <div css={containerStyle} data-written-by="markdown">
+            {children}
+          </div>
+        </article>
+      </main>
       <Footer />
     </div>
   );

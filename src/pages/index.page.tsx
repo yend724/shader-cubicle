@@ -7,21 +7,12 @@ import { SITE_DATA } from '@/constants/site';
 import { LEAENING_PATH } from '@/constants/path';
 import { getAllPahtMaps } from '@/interfaces/api';
 
-export const getStaticProps = async () => {
-  const pathMaps = await getAllPahtMaps();
-  return {
-    props: pathMaps,
-  };
-};
-
-const mainStyle = (theme: Theme) => css`
+const containerStyle = (theme: Theme) => css`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: ${theme.spacing(8, 4)};
   max-width: var(--max-width-main);
-  margin-right: auto;
-  margin-left: auto;
-  padding: ${theme.spacing(8, 4)};
+  margin-inline: auto;
   ${theme.mq('sm')} {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -84,7 +75,7 @@ type Props = {
 };
 const Home: NextPageWithLayout<Props> = ({ pathMaps }) => {
   return (
-    <div css={mainStyle}>
+    <div css={containerStyle}>
       {LEAENING_PATH.map(p => {
         const { path } = p;
         const { meta } = pathMaps[path];
@@ -117,3 +108,10 @@ Home.getLayout = (page: React.ReactElement) => {
 };
 
 export default Home;
+
+export const getStaticProps = async () => {
+  const pathMaps = await getAllPahtMaps();
+  return {
+    props: pathMaps,
+  };
+};
