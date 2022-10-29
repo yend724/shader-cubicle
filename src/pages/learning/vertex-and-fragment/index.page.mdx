@@ -1,0 +1,60 @@
+import Link from "next/link";
+import { LearningLayout } from '@/components/layout/LearningLayout';
+import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
+import { vertexShader, fragmentShader } from "./shaders.ts";
+export const meta = {
+  title: "頂点シェーダーとフラグメントシェーダー",
+  published: "2022-10-28",
+  author: "YEND",
+  tag: ["頂点シェーダー", "フラグメントシェーダー"]
+}
+export default ({ children }) => (
+  <LearningLayout meta={meta}>{children}</LearningLayout>
+);
+
+前回の記事「<Link href="/learning/preparation">シェーダーを描くための準備</Link>」で2種類のシェーダーを記述した。つまり**頂点シェーダー**と**フラグメントシェーダー**である。
+
+頂点シェーダーとフラグメントシェーダーの詳細については次の[MDNの記事](https://developer.mozilla.org/ja/docs/Games/Techniques/3D_on_the_web/GLSL_Shaders)を参照するとして、一応本記事でもざっくりと説明を書いておく。
+
+頂点シェーダーはその名の通り、頂点に関する情報を扱うシェーダーであり `gl_Position` というGLSLの組み込みに値を格納する。頂点シェーダーでは頂点に関する様々な情報を扱うことができるが、必要不可欠な情報として**頂点の位置情報**がある。頂点シェーダーは各頂点に対し、1回ずつ実行される。
+
+フラグメントシェーダーはピクセルの色を決定するシェーダーであり、`gl_FragColor` に値を格納する。描画対象にあるピクセルのRGBA（赤、緑、青、透過度）を定義し、各ピクセルごとに1回ずつ実行される。
+
+## 値の受け渡しとグラデーション
+
+頂点シェーダーとフラグメントシェーダーの役割がわかったところで、色をグラデーションさせてみる。
+
+[Three.jsのドキュメント](https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram)に記載がある通り、Three.jsのWebGLProgramでは、頂点シェーダーに組み込みのUV座標が用意されている。
+
+このUV座標情報を頂点シェーダーからフラグメントシェーダーに受け渡すことで、グラデーションを表現できる。頂点シェーダーからフラグメントシェーダーへの値の受け渡しには`varying`修飾子を使用する。
+
+まず頂点シェーダーにおいて`varying vec2 vUv;`の宣言をし、この変数に`uv`を格納する。
+
+```glsl[data-label="vertexShader"]
+varying vec2 vUv;
+
+void main () {
+  vUv = uv;
+  //...
+};
+```
+
+フラグメントシェーダーでも同様に`varying vec2 vUv;`の宣言をすることで、格納された`uv`を使用することができる。
+
+```glsl[data-label="fragmentShader"]
+varying vec2 vUv
+//...
+```
+
+ピクセルごとのUV座標がわ狩るのであれば、あとは線形補間でグラデーションすれば良いことになる。線形補間には`mix()`関数が使えるので、以下のような実装となる。
+
+<ShaderCanvasWithCodeMirror
+  material={{
+    vertexShader,
+    fragmentShader
+  }}
+/>
+
+以上でグラデーションが表現できた。
+
+また、上記は左から右にかけて、白から黒とグラデーションしている。`mix(white, black, vUv.x);`の部分を`mix(white, black, vUv.y);`に変更してみると、下から上にかけて白から黒とグラデーションすることがわかる。このことよりUV座標は左下が(0.0, 0.0)であり、右上が(1.0, 1.0)であることがわかった。

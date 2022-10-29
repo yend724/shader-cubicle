@@ -11,7 +11,7 @@ questions:
 
 ```mdx
 import { LearningLayout } from '@/components/layout/LearningLayout';
-import { ShaderCodeMirrorWithCanvas } from "@/components/ui/ShaderCodeMirrorWithCanvas";
+import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
 import { vertexShader, fragmentShader } from "./shaders.ts";
 export const meta = {
   title: "タイトルが入ります",
@@ -23,7 +23,7 @@ export default ({ children }) => (
   <LearningLayout meta={meta}>{children}</LearningLayout>
 );
 
-<ShaderCodeMirrorWithCanvas
+<ShaderCanvasWithCodeMirror
   material={{"{{
     vertexShader,
     fragmentShader
