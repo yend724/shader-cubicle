@@ -22,7 +22,7 @@ const itemStyle = css`
 const tagsStyle = (theme: Theme) => css`
   display: flex;
   flex-wrap: wrap;
-  gap: ${theme.spacing(0, 2)};
+  gap: ${theme.spacing(2)};
   margin-top: ${theme.spacing(2)};
 `;
 const tagStyle = (theme: Theme) => css`
@@ -66,35 +66,33 @@ type Props = {
 const Home: NextPageWithLayout<Props> = ({ pathMaps }) => {
   return (
     <div css={containerStyle}>
-      <ul css={listStyle}>
+      <div css={listStyle}>
         {LEAENING_PATH.map(p => {
           const { path } = p;
           const { meta } = pathMaps[path];
           const { title, tag, published } = meta;
           const formattedPublishedDate = published.replace(/-/g, '.');
           return (
-            <li key={path} css={itemStyle}>
-              <span>
-                <time dateTime={published}>{formattedPublishedDate}</time>
-              </span>
+            <article key={path} css={itemStyle}>
+              <time dateTime={published}>{formattedPublishedDate}</time>
               <div>
                 <Link href={`/learning/${path}`} passHref>
                   <a css={linkStyle}>
-                    <p css={titleStyle}>{title}</p>
+                    <h2 css={titleStyle}>{title}</h2>
                   </a>
                 </Link>
               </div>
-              <div css={tagsStyle}>
+              <ul css={tagsStyle}>
                 {tag.map(t => (
-                  <span key={t} css={tagStyle}>
+                  <li key={t} css={tagStyle}>
                     {t}
-                  </span>
+                  </li>
                 ))}
-              </div>
-            </li>
+              </ul>
+            </article>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 };
