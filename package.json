@@ -8,7 +8,7 @@
     "start": "next start",
     "serve": "serve ./dist",
     "lint": "next lint",
-    "generate": "npx scaffdog generate"
+    "g": "npx scaffdog generate"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.1.0",
