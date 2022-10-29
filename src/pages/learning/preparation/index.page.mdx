@@ -13,9 +13,9 @@ export default ({ children }) => (
 );
 
 
-本記事ではShaderを描くための準備をする。
+本記事ではシェーダーコードを描くための準備をする。
 
-Shaderを描くにはいくつか選択肢ががあるが、本サイトでは基本的に[React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)を使用する。ざっくり以下のようなコードを書いている。
+シェーダーコードを描くにはいくつか選択肢があるが、本サイトでは基本的に[React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)を使用する。ざっくり以下のようなコードを書いている。
 
 ```tsx
 import { Canvas } from '@react-three/fiber';
@@ -56,7 +56,7 @@ return (
 
 ## ハローワールドしてみる
 
-とりあえずハローワールドということで最初のシェーダーを書いてみよう。一旦細かいことは置いておいて頂点シェーダー（Vertex Shader）とフラグメントシェーダー（Fragment Shader）を次のように記述してみる。
+とりあえずハローワールドということで最初のシェーダーを書いてみる。一旦細かいことは置いておいて頂点シェーダー（Vertex Shader）とフラグメントシェーダー（Fragment Shader）を次のように記述した。
 
 ```glsl[data-label="vertexShader"]
 void main () {
@@ -79,13 +79,13 @@ void main () {
   }}
 />
 
-黒色のCanvasが表示された。これが本サイトにおける最初のシェーダーコードである。
+黒色のCanvasが表示された。これが本サイトにおける最初のシェーダーコードになる。
 
-`gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);`の部分を`gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);`に変更してみる。Canvasが赤色に変化すれば、本記事における準備は完了である。
+`gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);`の部分を`gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);`に変更してみるとCanvasが赤色に変化した。本記事における準備は完了である。
 
 ## セグメント
 
-ちなみに`PlaneGeometry`に渡している値を確認するとわかるが、このジオメトリは縦横それぞれに64分割されている。`wireframe`オブションを`true`にしてみるとわかりやすいので、以下で確認する。
+ちなみに`PlaneGeometry`に渡している値を確認するとわかるが、このジオメトリは縦横にそれぞれ64分割されている。`wireframe`オブションを`true`にしてみるとわかりやすい。
 
 <ShaderCodeMirrorWithCanvas
   material={{
