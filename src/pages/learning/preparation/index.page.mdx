@@ -1,5 +1,5 @@
 import { LearningLayout } from '@/components/layout/LearningLayout';
-import { ShaderCodeMirrorWithCanvas } from "@/components/ui/ShaderCodeMirrorWithCanvas";
+import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
 import { vertexShader, fragmentShader } from "./shaders.ts";
 
 export const meta = {
@@ -71,7 +71,7 @@ void main () {
 
 実行結果は以下になる。
 
-<ShaderCodeMirrorWithCanvas
+<ShaderCanvasWithCodeMirror
   material={{
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
@@ -86,7 +86,7 @@ void main () {
 
 ちなみに`PlaneGeometry`に渡している値を確認するとわかるが、このジオメトリは縦横にそれぞれ64分割されている。`wireframe`オブションを`true`にしてみるとわかりやすい。
 
-<ShaderCodeMirrorWithCanvas
+<ShaderCanvasWithCodeMirror
   material={{
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,

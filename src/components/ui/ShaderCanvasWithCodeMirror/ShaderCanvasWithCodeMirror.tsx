@@ -1,49 +1,26 @@
 import { css } from '@emotion/react';
 import { ShaderCodeMirror } from '@/components/ui/ShaderCodeMirror';
-import { Canvas, useThree, ThreeElements } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { useShader } from './hooks';
 import { calcDistFromFov } from './utils';
+import { Mesh, MeshProps } from './Mesh';
 
-type MeshProps = {
-  mesh?: ThreeElements['mesh'];
-  geometry?: ThreeElements['planeGeometry'];
-  material?: ThreeElements['shaderMaterial'];
-};
-const Mesh: React.FC<MeshProps> = ({
-  mesh,
-  geometry = { args: [2, 2, 64, 64] },
-  material,
-}) => {
-  const { gl, scene, camera } = useThree();
-  return (
-    <mesh {...mesh}>
-      <planeGeometry {...geometry} />
-      <shaderMaterial
-        {...material}
-        onUpdate={v => {
-          if (v.isShaderMaterial) {
-            gl.compile(scene, camera);
-          }
-        }}
-      />
-    </mesh>
-  );
-};
-
+const canvasStyle = css`
+  width: 100%;
+  aspect-ratio: 1/1;
+`;
 const blockStyle = css`
   margin-top: 1rem;
 `;
 
-type Props = {
-  mesh?: ThreeElements['mesh'];
-  geometry?: ThreeElements['planeGeometry'];
-  material?: ThreeElements['shaderMaterial'];
+type Props = MeshProps & {
   vertexHidden?: boolean;
   fragmentHidden?: boolean;
 };
-export const ShaderCodeMirrorWithCanvas: React.FC<Props> = ({
+export const ShaderCanvasWithCodeMirror: React.FC<Props> = ({
   mesh,
   geometry,
+  geomertyElement,
   material,
   vertexHidden = false,
   fragmentHidden = false,
@@ -57,10 +34,7 @@ export const ShaderCodeMirrorWithCanvas: React.FC<Props> = ({
   return (
     <>
       <Canvas
-        css={css`
-          width: 100%;
-          aspect-ratio: 1/1;
-        `}
+        css={canvasStyle}
         camera={{
           fov: 60,
           near: 0.1,
@@ -71,6 +45,7 @@ export const ShaderCodeMirrorWithCanvas: React.FC<Props> = ({
         <Mesh
           mesh={mesh}
           geometry={geometry}
+          geomertyElement={geomertyElement}
           material={{
             ...material,
             vertexShader: vShader,
