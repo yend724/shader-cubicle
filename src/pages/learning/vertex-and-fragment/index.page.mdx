@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LearningLayout } from '@/components/layout/LearningLayout';
 import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
-import { vertexShader, fragmentShader } from "./shaders.ts";
+import { vertexShader, fragmentShader, vertexShader02, fragmentShader02 } from "./shaders.ts";
 export const meta = {
   title: "頂点シェーダーとフラグメントシェーダー",
   published: "2022-10-30",
@@ -18,43 +18,83 @@ export default ({ children }) => (
 
 頂点シェーダーはその名の通り、頂点に関する情報を扱うシェーダーであり `gl_Position` というGLSLの組み込み変数に値を格納する。頂点シェーダーでは頂点に関する様々な情報を扱うことができるが、必要不可欠な情報として**頂点の位置情報**がある。頂点シェーダーは各頂点に対し、1回ずつ実行される。
 
-フラグメントシェーダーはピクセルの色情報を扱うシェーダーであり、`gl_FragColor` というこちらもGLSLの組み込み変数に値を格納する。描画対象にあるピクセルのRGBA（赤、緑、青、透過度）を定義し、各ピクセルに対し、1回ずつ実行される。
+フラグメントシェーダーはピクセルの色情報を扱うシェーダーであり、`gl_FragColor` というこちらもGLSLの組み込み変数に値を格納する。描画対象にあるピクセルのRGBA（赤、緑、青、不透明度）を定義し、各ピクセルに対し、1回ずつ実行される。
 
-## 値の受け渡しとグラデーション
+## 頂点シェーダーを書き換えてみる
 
-頂点シェーダーとフラグメントシェーダーの役割がわかったところで、色をグラデーションさせてみる。
-
-[Three.jsのドキュメント](https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram)に記載がある通り、Three.jsのWebGLProgramでは、頂点シェーダーに組み込みのUV座標が用意されている。
-
-このUV座標情報を頂点シェーダーからフラグメントシェーダーに受け渡すことで、グラデーションを表現できる。頂点シェーダーからフラグメントシェーダーへの値の受け渡しには`varying`修飾子を使用する。
-
-まず頂点シェーダーにおいて`varying vec2 vUv;`の宣言をし、この変数に`uv`を格納する。
+各々の役割がわかったところで、まずは頂点シェーダーを書き換えてみたい。[Three.jsのWebGLProgram](https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram)によると、頂点の位置は次のように計算できるらしい。
 
 ```glsl[data-label="vertexShader"]
-varying vec2 vUv;
-
 void main () {
-  vUv = uv;
-  //...
-};
+  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
+}
 ```
 
-フラグメントシェーダーでも同様に`varying vec2 vUv;`の宣言をすることで、格納された`uv`を使用することができる。
+WebGLでは3次元の情報を（最終的にモニター映し出すために）2次元の情報に座標変換する必要がある。ありがたいことにThree.jsの`ShaderMaterial`では座標変換のために必要となる下記の変換行列をビルドインで用意してくれている。
 
-```glsl[data-label="fragmentShader"]
-varying vec2 vUv
-//...
-```
+- `projectionMatrix`: モデル変換。物体の位置を定義する。
+- `viewMatrix`: ビュー変換。カメラの位置や向きを定義する。
+- `modelMatrix`: プロジェクション変換。カメラがどの領域を映し出すかを定義する。
 
-ピクセルごとのUV座標がわかるのであれば、あとは線形補間でグラデーションすれば良いことになる。線形補間には`mix()`関数が使えるので、以下のような実装となる。
+`position`はオブジェクトの頂点座標であり、上述の座標変換された値が `gl_Position` に格納されるわけである（ちなみに`position`もビルドインで用意されている）。
+
+変換行列についてざっくり認識したところで、以下のように頂点シェーダーを書き換えてみる。
 
 <ShaderCanvasWithCodeMirror
   material={{
     vertexShader,
-    fragmentShader
+    fragmentShader,
+    wireframe: true,
   }}
+  fragmentHidden={true}
 />
 
-以上でグラデーションが表現できた。
+アーチ上に歪んだオブジェクトが確認できる（わかりやすくワイヤーフレーム状態にした）。次の操作を行っている。
 
-また、上記は左から右にかけて、白から黒とグラデーションしている。`mix(white, black, vUv.x);`の部分を`mix(white, black, vUv.y);`に変更してみると、下から上にかけて白から黒とグラデーションすることがわかる。このことよりUV座標は左下が(0.0, 0.0)であり、右上が(1.0, 1.0)であることがわかった。
+書き換えているのは`position`の頂点座標と、モデル変換をした`modelPosition`の値となる。まず`position`の頂点座標はX軸に沿って、Y座標を`cos`で歪めている。
+
+```glsl
+void main () {
+  vec3 myPosition = position;
+  myPosition.y += cos(myPosition.x); // オブジェクトのY座標をconで歪める
+  // ...
+}
+```
+
+`modelMatrix`はモデル変換行列であり、物体の位置を定義するものであった。つまり次の記述はオブジェクトの位置をZ軸に-1、Y軸に-1しているものである。
+
+```glsl
+void main () {
+  //...
+  vec4 modelPosition = modelMatrix * vec4(myPosition, 1.0);
+  modelPosition.z += -1.0; // オブジェクトの位置をZ軸方向に-1
+  modelPosition.y += -1.0; // オブジェクトの位置をY軸方向に-1
+  //...
+}
+```
+
+したがって上記の操作は、オブジェクトの頂点座標と位置に変更を加えたものとなる。
+
+## フラグメントシェーダーを書き換えてみる
+
+次にフラグメントシェーダーの書き換えをしてみる。
+
+<ShaderCanvasWithCodeMirror
+  material={{
+    vertexShader: vertexShader02,
+    fragmentShader: fragmentShader02,
+  }}
+  vertexHidden={true}
+/>
+
+こちらに関してはあまり説明することがないが、フラグメントシェーダーでは`gl_FragColor`にRGBAの色情報を格納するのであった。
+
+```glsl
+void main () {
+  // (赤、緑、青、不透明度) = (1.0, 0.0, 0.0, 1.0);
+  vec4 rgba = vec4(1.0, 0.0, 0.0, 1.0);
+  gl_FragColor = vec4(rgba);
+}
+```
+
+上記のコードでは`vec4 rgba = vec4(1.0, 0.0, 0.0, 1.0)`となっており、つまり赤色の情報を定義したことになる。試しに`rgba`を任意の値にすることで、色が変更されるのを確認できる。
