@@ -4,17 +4,26 @@ export const useMinimalViewPort = (size: number = 360) => {
   useEffect(() => {
     const viewport = document.querySelector('meta[name="viewport"]')!;
     const switchViewport = () => {
-      const value =
-        window.outerWidth > size
-          ? 'width=device-width,initial-scale=1'
-          : `width=${size}`;
-      if (viewport.getAttribute('content') !== value) {
-        viewport.setAttribute('content', value);
+      const match = window.outerWidth >= 360;
+      if (match) {
+        viewport.setAttribute('content', 'width=device-width,initial-scale=1');
+        window.removeEventListener('resize', switchViewport);
       }
     };
-    addEventListener('resize', switchViewport, false);
+
+    const mediaQueryList = window.matchMedia(`(min-width: ${size}px)`);
+    const listener = (event: MediaQueryListEvent | MediaQueryList) => {
+      if (!event.matches) {
+        viewport.setAttribute('content', `width=${size}`);
+        window.addEventListener('resize', switchViewport, false);
+      }
+    };
+
+    mediaQueryList.addEventListener('change', listener);
+    listener(mediaQueryList);
+
     return () => {
-      removeEventListener('resize', switchViewport);
+      mediaQueryList.removeEventListener('change', listener);
     };
   }, [size]);
 };
