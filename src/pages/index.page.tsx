@@ -71,7 +71,6 @@ const Home: NextPageWithLayout<Props> = ({ pathMaps }) => {
           const { path } = p;
           const { meta } = pathMaps[path];
           const { title, tag, published, updated } = meta;
-          const formattedPublishedDate = published.replace(/-/g, '.');
           return (
             <article key={path} css={itemStyle}>
               <LearningDate published={published} updated={updated} />
