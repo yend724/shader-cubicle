@@ -34,15 +34,15 @@ export const LearningPager: React.FC<Props> = ({ currentPagePath }) => {
 
   return (
     <div css={pagerStyle}>
-      {currentIndex !== 0 && (
-        <Link href={LEAENING_PATH[currentIndex - 1]?.path} passHref>
+      {currentIndex < pathLastIndex && (
+        <Link href={LEAENING_PATH[currentIndex + 1]?.path} passHref>
           <a css={linkStyle} data-to="prev">
             前の記事へ
           </a>
         </Link>
       )}
-      {currentIndex < pathLastIndex && (
-        <Link href={LEAENING_PATH[currentIndex + 1]?.path} passHref>
+      {currentIndex !== 0 && (
+        <Link href={LEAENING_PATH[currentIndex - 1]?.path} passHref>
           <a css={linkStyle} data-to="next">
             次の記事へ
           </a>
