@@ -2,6 +2,7 @@ import { css, Theme } from '@emotion/react';
 import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { HomeHead } from '@/components/feature/home/HomeHead';
+import { useMinimalViewPort } from '@/hooks/useMinimalViewPort';
 
 const WrapperStyle = css`
   display: grid;
@@ -18,6 +19,7 @@ type Props = {
   children: React.ReactNode;
 };
 export const TopLayout: React.FC<Props> = ({ title, children }) => {
+  useMinimalViewPort();
   return (
     <div css={WrapperStyle}>
       <HomeHead title={title} />

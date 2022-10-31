@@ -5,6 +5,8 @@ import { Footer } from '@/components/ui/Footer';
 import { TwitterShareLink } from '@/components/ui/TwitterShareLink';
 import { LearningHead } from '@/components/feature/learning/LearningHead';
 import { LearningDate } from '@/components/feature/learning/LearningDate';
+import { LearningPager } from '@/components/feature/learning/LearningPager';
+import { useMinimalViewPort } from '@/hooks/useMinimalViewPort';
 import { SITE_DATA } from '@/constants/site';
 
 const layoutStyle = css`
@@ -41,29 +43,33 @@ const titleStyle = css`
   font-weight: var(--font-weight-bold);
 `;
 
-type Props = {
-  meta: {
-    title: string;
-    published: string;
-    updated?: string;
-    author: string;
-    tag: string[];
-  };
+type Meta = {
   title: string;
+  published: string;
+  updated?: string;
+  author: string;
+  tag: string[];
+};
+type PathMap = {
+  meta: Meta;
+  path: string;
+};
+type Props = {
+  meta: Meta;
+  pathMaps: Record<string, PathMap>;
   children: React.ReactNode;
 };
 export const LearningLayout: React.FC<Props> = ({ children, meta }) => {
+  useMinimalViewPort();
   const router = useRouter();
+  const { pathname } = router;
   const { title, published, updated } = meta;
-  const twitterShareUrl = `https://${SITE_DATA.domain}${router.pathname}`;
+  const twitterShareUrl = `https://${SITE_DATA.domain}${pathname}`;
   const twitterShareText = encodeURI(`${title} | ${SITE_DATA.siteName}`);
 
   return (
     <div css={layoutStyle} data-page={'learning'}>
-      <LearningHead
-        title={`${title} | ${SITE_DATA.siteName}`}
-        url={router.pathname}
-      />
+      <LearningHead title={`${title} | ${SITE_DATA.siteName}`} url={pathname} />
       <Header />
       <main css={mainStyle}>
         <article css={articleStyle}>
@@ -79,6 +85,7 @@ export const LearningLayout: React.FC<Props> = ({ children, meta }) => {
           <div css={containerStyle} data-written-by="markdown">
             {children}
           </div>
+          <LearningPager currentPagePath={pathname} />
         </article>
       </main>
       <Footer />

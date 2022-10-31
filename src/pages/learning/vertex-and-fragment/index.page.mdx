@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { getAllPahtMaps } from '@/interfaces/api';
 import { LearningLayout } from '@/components/layout/LearningLayout';
 import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
 import { vertexShader, fragmentShader, vertexShader02, fragmentShader02 } from "./shaders.ts";
+
 export const meta = {
   title: "頂点シェーダーとフラグメントシェーダー",
   published: "2022-10-30",
@@ -9,9 +11,17 @@ export const meta = {
   author: "YEND",
   tag: ["頂点シェーダー", "フラグメントシェーダー"]
 }
-export default ({ children }) => (
-  <LearningLayout meta={meta}>{children}</LearningLayout>
-);
+export default ({ pathMaps, children }) => {
+  return (
+    <LearningLayout pathMaps={pathMaps} meta={meta}>{children}</LearningLayout>
+  )
+};
+export async function getStaticProps(context) {
+  const pathMaps = await getAllPahtMaps();
+  return {
+    props: pathMaps,
+  };
+}
 
 前回の記事「<Link href="/learning/preparation">シェーダーを描くための準備</Link>」で2種類のシェーダーを記述した。つまり**頂点シェーダー**と**フラグメントシェーダー**である。
 

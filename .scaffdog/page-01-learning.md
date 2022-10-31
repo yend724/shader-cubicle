@@ -10,6 +10,7 @@ questions:
 # `{{ inputs.name }}/index.page.mdx`
 
 ```mdx
+import { getAllPahtMaps } from '@/interfaces/api';
 import { LearningLayout } from '@/components/layout/LearningLayout';
 import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
 import { vertexShader, fragmentShader } from "./shaders.ts";
@@ -19,9 +20,17 @@ export const meta = {
   author: "YEND",
   tag: ["頂点シェーダー", "フラグメントシェーダー"]
 }
-export default ({ children }) => (
-  <LearningLayout meta={meta}>{children}</LearningLayout>
-);
+export default ({ children }) => {
+  return (
+    <LearningLayout meta={meta}>{children}</LearningLayout>
+  );
+};
+export async function getStaticProps(context) {
+  const pathMaps = await getAllPahtMaps();
+  return {
+    props: pathMaps,
+  };
+}
 
 <ShaderCanvasWithCodeMirror
   material={{"{{

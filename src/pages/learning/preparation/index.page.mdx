@@ -1,3 +1,4 @@
+import { getAllPahtMaps } from '@/interfaces/api';
 import { LearningLayout } from '@/components/layout/LearningLayout';
 import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
 import { vertexShader, fragmentShader } from "./shaders.ts";
@@ -9,9 +10,17 @@ export const meta = {
   author: "YEND",
   tag: ["頂点シェーダー", "フラグメントシェーダー"]
 }
-export default ({ children }) => (
-  <LearningLayout meta={meta}>{children}</LearningLayout>
-);
+export default ({ children }) => {
+  return (
+    <LearningLayout meta={meta}>{children}</LearningLayout>
+  );
+};
+export async function getStaticProps(context) {
+  const pathMaps = await getAllPahtMaps();
+  return {
+    props: pathMaps,
+  };
+}
 
 本記事ではシェーダーコードを描くための準備をする。
 
@@ -58,13 +67,13 @@ return (
 
 とりあえずハローワールドということで最初のシェーダーを書いてみる。一旦細かいことは置いておいて頂点シェーダー（Vertex Shader）とフラグメントシェーダー（Fragment Shader）を次のように記述した。
 
-```glsl[data-label="vertexShader"]
+```glsl\[data-label="vertexShader"]
 void main () {
   gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
 }
 ```
 
-```glsl[data-label="fragmentShader"]
+```glsl\[data-label="fragmentShader"]
 void main () {
   gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 }
