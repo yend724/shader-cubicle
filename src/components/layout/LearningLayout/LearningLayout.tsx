@@ -3,6 +3,7 @@ import { css, Theme } from '@emotion/react';
 import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { TwitterShareLink } from '@/components/ui/TwitterShareLink';
+import { Tag } from '@/components/ui/Tag';
 import { LearningHead } from '@/components/feature/learning/LearningHead';
 import { LearningDate } from '@/components/feature/learning/LearningDate';
 import { LearningPager } from '@/components/feature/learning/LearningPager';
@@ -34,15 +35,17 @@ const infoStyle = (theme: Theme) => css`
   flex-wrap: wrap;
   justify-content: space-between;
   gap: ${theme.spacing(4)};
-  margin-top: ${theme.spacing(4)};
-  border-bottom: 1px solid var(--color-divider);
-  padding-bottom: ${theme.spacing(4)};
 `;
-const titleStyle = css`
+const titleStyle = (theme: Theme) => css`
+  margin-top: ${theme.spacing(4)};
   font-size: 2rem;
   font-weight: var(--font-weight-bold);
 `;
-
+const tagContainerStyle = (theme: Theme) => css`
+  margin-top: ${theme.spacing(4)};
+  padding-bottom: ${theme.spacing(4)};
+  border-bottom: 1px solid var(--color-divider);
+`;
 type Meta = {
   title: string;
   published: string;
@@ -63,7 +66,7 @@ export const LearningLayout: React.FC<Props> = ({ children, meta }) => {
   useMinimalViewPort();
   const router = useRouter();
   const { pathname } = router;
-  const { title, published, updated } = meta;
+  const { title, published, updated, tag } = meta;
   const twitterShareUrl = `https://${SITE_DATA.domain}${pathname}`;
   const twitterShareText = encodeURI(`${title} | ${SITE_DATA.siteName}`);
 
@@ -73,7 +76,6 @@ export const LearningLayout: React.FC<Props> = ({ children, meta }) => {
       <Header />
       <main css={mainStyle}>
         <article css={articleStyle}>
-          <h1 css={titleStyle}>{title}</h1>
           <div css={infoStyle}>
             <LearningDate published={published} updated={updated} />
             <TwitterShareLink
@@ -81,6 +83,10 @@ export const LearningLayout: React.FC<Props> = ({ children, meta }) => {
               text={twitterShareText}
               via="yend724"
             />
+          </div>
+          <h1 css={titleStyle}>{title}</h1>
+          <div css={tagContainerStyle}>
+            <Tag tag={tag} />
           </div>
           <div css={containerStyle} data-written-by="markdown">
             {children}

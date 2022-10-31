@@ -2,35 +2,31 @@ import type { NextPageWithLayout } from 'next';
 import Link from 'next/link';
 import { css, Theme } from '@emotion/react';
 import { TopLayout } from '@/components/layout/TopLayout';
+import { Tag } from '@/components/ui/Tag';
+import { LearningDate } from '@/components/feature/learning/LearningDate';
 import { SITE_DATA } from '@/constants/site';
 import { LEAENING_PATH } from '@/constants/path';
 import { getAllPahtMaps } from '@/interfaces/api';
-import { LearningDate } from '@/components/feature/learning/LearningDate';
 
 const containerStyle = css`
   max-width: var(--max-width-main);
   margin-inline: auto;
 `;
+const labelStyle = css`
+  font-size: 2rem;
+  font-weight: var(--font-weight-bold);
+`;
 const listStyle = (theme: Theme) => css`
   display: flex;
   flex-direction: column;
   gap: ${theme.spacing(8)};
+  margin-top: ${theme.spacing(8)};
 `;
 const itemStyle = css`
   display: block;
 `;
-const tagsStyle = (theme: Theme) => css`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${theme.spacing(2)};
+const tagContainerStyle = (theme: Theme) => css`
   margin-top: ${theme.spacing(2)};
-`;
-const tagStyle = (theme: Theme) => css`
-  padding: ${theme.spacing(0, 2)};
-  border-radius: 4px;
-  background-color: var(--indigo-9);
-  color: var(--color-white);
-  font-size: 0.75rem;
 `;
 const linkStyle = css`
   display: inline-block;
@@ -66,6 +62,7 @@ type Props = {
 const Home: NextPageWithLayout<Props> = ({ pathMaps }) => {
   return (
     <div css={containerStyle}>
+      <p css={labelStyle}>Latest</p>
       <div css={listStyle}>
         {LEAENING_PATH.map(p => {
           const { path } = p;
@@ -81,13 +78,9 @@ const Home: NextPageWithLayout<Props> = ({ pathMaps }) => {
                   </a>
                 </Link>
               </div>
-              <ul css={tagsStyle}>
-                {tag.map(t => (
-                  <li key={t} css={tagStyle}>
-                    {t}
-                  </li>
-                ))}
-              </ul>
+              <div css={tagContainerStyle}>
+                <Tag tag={tag} />
+              </div>
             </article>
           );
         })}

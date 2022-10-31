@@ -3,9 +3,9 @@ export type LearningPath = {
 }[];
 export const LEAENING_PATH: LearningPath = [
   {
-    path: 'preparation',
+    path: 'vertex-and-fragment',
   },
   {
-    path: 'vertex-and-fragment',
+    path: 'preparation',
   },
 ];
