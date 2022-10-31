@@ -4,6 +4,7 @@ import { Header } from '@/components/ui/Header';
 import { Footer } from '@/components/ui/Footer';
 import { TwitterShareLink } from '@/components/ui/TwitterShareLink';
 import { LearningHead } from '@/components/feature/learning/LearningHead';
+import { LearningDate } from '@/components/feature/learning/LearningDate';
 import { SITE_DATA } from '@/constants/site';
 
 const layoutStyle = css`
@@ -44,6 +45,7 @@ type Props = {
   meta: {
     title: string;
     published: string;
+    updated?: string;
     author: string;
     tag: string[];
   };
@@ -52,9 +54,7 @@ type Props = {
 };
 export const LearningLayout: React.FC<Props> = ({ children, meta }) => {
   const router = useRouter();
-  const { title, published } = meta;
-  const [year, month, date] = published.split('-');
-  const formattedPublished = `${year}.${month}.${date}`;
+  const { title, published, updated } = meta;
   const twitterShareUrl = `https://${SITE_DATA.domain}${router.pathname}`;
   const twitterShareText = encodeURI(`${title} | ${SITE_DATA.siteName}`);
 
@@ -69,9 +69,7 @@ export const LearningLayout: React.FC<Props> = ({ children, meta }) => {
         <article css={articleStyle}>
           <h1 css={titleStyle}>{title}</h1>
           <div css={infoStyle}>
-            <span>
-              公開日 <time dateTime={published}>{formattedPublished}</time>
-            </span>
+            <LearningDate published={published} updated={updated} />
             <TwitterShareLink
               url={twitterShareUrl}
               text={twitterShareText}

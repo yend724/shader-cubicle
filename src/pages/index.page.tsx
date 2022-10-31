@@ -1,11 +1,11 @@
 import type { NextPageWithLayout } from 'next';
 import Link from 'next/link';
-// import Image from 'next/image';
 import { css, Theme } from '@emotion/react';
 import { TopLayout } from '@/components/layout/TopLayout';
 import { SITE_DATA } from '@/constants/site';
 import { LEAENING_PATH } from '@/constants/path';
 import { getAllPahtMaps } from '@/interfaces/api';
+import { LearningDate } from '@/components/feature/learning/LearningDate';
 
 const containerStyle = css`
   max-width: var(--max-width-main);
@@ -54,10 +54,10 @@ type Props = {
       meta: {
         title: string;
         published: string;
-        updated?: string | undefined;
+        updated?: string;
         author: string;
         tag: string[];
-        draft?: boolean | undefined;
+        draft?: boolean;
         order?: number;
       };
     }
@@ -70,11 +70,11 @@ const Home: NextPageWithLayout<Props> = ({ pathMaps }) => {
         {LEAENING_PATH.map(p => {
           const { path } = p;
           const { meta } = pathMaps[path];
-          const { title, tag, published } = meta;
+          const { title, tag, published, updated } = meta;
           const formattedPublishedDate = published.replace(/-/g, '.');
           return (
             <article key={path} css={itemStyle}>
-              <time dateTime={published}>{formattedPublishedDate}</time>
+              <LearningDate published={published} updated={updated} />
               <div>
                 <Link href={`/learning/${path}`} passHref>
                   <a css={linkStyle}>
