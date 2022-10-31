@@ -23,6 +23,7 @@ export const useMinimalViewPort = (size: number = 360) => {
     listener(mediaQueryList);
 
     return () => {
+      window.removeEventListener('resize', switchViewport);
       mediaQueryList.removeEventListener('change', listener);
     };
   }, [size]);
