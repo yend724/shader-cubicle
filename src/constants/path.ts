@@ -3,6 +3,9 @@ export type LearningPath = {
 }[];
 export const LEAENING_PATH: LearningPath = [
   {
+    path: 'glsl-basic',
+  },
+  {
     path: 'vertex-and-fragment',
   },
   {

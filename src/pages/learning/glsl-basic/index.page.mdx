@@ -1,0 +1,118 @@
+import Link from "next/link"
+import { getAllPahtMaps } from '@/interfaces/api';
+import { LearningLayout } from '@/components/layout/LearningLayout';
+import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
+import { vertexShader, fragmentShader } from "./shaders.ts";
+export const meta = {
+  title: "GLSLの基礎的な書き方を確認する",
+  published: "2022-11-01",
+  author: "YEND",
+  tag: ["頂点シェーダー", "フラグメントシェーダー"]
+}
+export default ({ children }) => {
+  return (
+    <LearningLayout meta={meta}>{children}</LearningLayout>
+  );
+};
+export async function getStaticProps(context) {
+  const pathMaps = await getAllPahtMaps();
+  return {
+    props: pathMaps,
+  };
+}
+
+ここまで適当にGLSLを記述してきたが、ここで記述のルールを見直してみる。
+
+```glsl\[data-label="vertexShader"]
+void main () {
+  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
+}
+```
+
+```glsl\[data-label="fragmentShader"]
+void main () {
+  gl_FragColor = vec4(1.0, 0.0, 0.0, 0.0);
+}
+```
+
+「[Shaderを描くための準備](../preparation)」でハローワールドとして上記のGLSLを書いた。この記述をもとに話を進める。
+
+まず、最初のルールとして頂点シェーダー・フラグメントシェーダーともに`main`関数の中に処理を記述する必要がある。
+
+```glsl
+void main {
+  //この中に処理を記述
+  //...
+}
+```
+
+その次に頂点シェーダーではGLSLの組み込み変数である`gl_Position`に値を渡す。というより頂点シェーダーの役割が、この`gl_Position`に値を渡すことと認識していてもとりあえずは問題なさそう。
+
+```glsl\[data-label="vertexShader"]
+void main {
+  // ...いろいろな処理
+  gl_Position = position;
+}
+```
+
+一方、フラグメントシェーダーの役割はGLSLの組み込み変数である`gl_FragColor`に値を渡すことである（と認識していてとりあえずは問題なさそう）。
+
+```glsl\[data-label="fragmentShader"]
+void main {
+  // ...いろいろな処理
+  gl_Position = color;
+}
+```
+
+`gl_Position`も`gl_FragColor`も`vec4型`、つまり4次元の浮動小数点ベクトルである。JavaScriptとは異なりGLSLは静的型付け言語なので、今扱っているデータの型が何なのかは常に意識する必要がある（JavaScriptでも型付けしないだけで意識しなくていいわけではない）。
+
+ここで「[WebGLProgram – three.js docs](https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram)」を確認する。「<Link href="/learning/vertex-and-fragment">前回の記事</Link>」でも軽く触れたが、Three.jsではビルドインでいくつかの変数が用意されている。ここまで[ShaderMaterial](https://threejs.org/docs/#api/en/materials/ShaderMaterial)を使用してきたので、あまり意識してこなかったが、ビルドインで用意されている変数の前に`uniform`や`attribute`といった修飾子がついているのがわかる（[RawShaderMaterial](https://threejs.org/docs/#api/en/materials/RawShaderMaterial)ではこの辺りの変数を自分で宣言する必要がある）。
+
+`attribute`は頂点情報を受け取る変数を定義する修飾子であり、たとえば`position`はそれにあたる。頂点ごとに頂点情報を渡すので、`attribute`で宣言された変数は頂点ごとに**異なる値**を受け取ることができる。対して、`uniform`で宣言された変数はすべての頂点（フラグメントシェーダーならすべてのピクセル）で**共通の値**を受け取ることができる。`modelMatrix`や`viewMatrix`、`projectionMatrix`などの変換行列はすべての頂点で同様の行列なので、`uniform`で宣言されている。
+
+## 頂点シェーダーからフラグメントシェーダーに値を渡す
+
+さて、ここで`varying`修飾子についても触れておく。`varying`修飾子は頂点シェーダーからフラグメントシェーダーに値を渡す際に使用できる修飾子である。百聞は一見にしかずということで、一旦実装してみる。
+
+<ShaderCanvasWithCodeMirror
+  material={{
+    vertexShader,
+    fragmentShader
+  }}
+/>
+
+上記で何をやっているかというと、まず頂点シェーダーにおいて、`varying`修飾子を使って`vColor`変数を宣言する。その後`vColor`にvec4型の値を格納する（今回は青色）。ちなみに`vColor`の先頭のvは`varying`のvであり、`uniform`で宣言した時は先頭にuをつけることが慣習としてあるらしい。
+
+```glsl\[data-label="vertexShader"]
+// varyingで宣言
+varying vec4 vColor;
+
+void main () {
+  // 青色を設定
+  vColor = vec4(0.0, 0.0, 1.0, 1.0);
+  //...
+}
+```
+
+次に、フラグメントシェーダーでも同様に`vColor`の変数を`varying`で定義する。こうすることで頂点シェーダーからフラグメントシェーダーに値を渡すことができる。
+
+```glsl\[data-label="fragmentShader"]
+// varyingで宣言、頂点シェーダーから値が渡ってくる
+varying vec4 vColor;
+
+void main () {
+  // vColor = vec4(0.0, 0.0, 1.0, 1.0) のはず
+  gl_FragColor = vec4(vColor);
+}
+```
+
+試しに頂点シェーダーで`vColor`の値をいろいろ変えてみると、オブジェクトの色が変わることが確認できる。
+
+以上でここまでに記述してきたGLSLの基本的なルールの確認ができた。
+
+## 参考
+
+- [WebGLProgram – three.js docs](https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram)
+- [GLSL シェーダー - ゲーム開発 | MDN](https://developer.mozilla.org/ja/docs/Games/Techniques/3D_on_the_web/GLSL_Shaders)
+- [wgld.org | WebGL: シェーダの記述と基礎 |](https://wgld.org/d/webgl/w008.html)
+- [three.js超入門 第7回 シェーダーに変数を渡す - Qiita](https://qiita.com/watabo_shi/items/1b48ca54a9034f3614d8)

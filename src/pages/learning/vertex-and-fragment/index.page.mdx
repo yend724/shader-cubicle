@@ -33,7 +33,7 @@ export async function getStaticProps(context) {
 
 ## 頂点シェーダーを書き換えてみる
 
-各々の役割がわかったところで、まずは頂点シェーダーを書き換えてみたい。[Three.jsのWebGLProgram](https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram)によると、頂点の位置は次のように計算できるらしい。
+各々の役割がわかったところで、まずは頂点シェーダーを書き換えてみたい。「[WebGLProgram ーThree.js](https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram)」によると、頂点の位置は次のように計算できるらしい。
 
 ```glsl[data-label="vertexShader"]
 void main () {
@@ -109,3 +109,7 @@ void main () {
 ```
 
 上記のコードでは`vec4 rgba = vec4(1.0, 0.0, 0.0, 1.0)`となっており、つまり赤色の情報を定義したことになる。試しに`rgba`を任意の値にすることで、色が変更されるのを確認できる。
+
+## 参考
+
+- [GLSL シェーダー - ゲーム開発 | MDN](https://developer.mozilla.org/ja/docs/Games/Techniques/3D_on_the_web/GLSL_Shaders)
