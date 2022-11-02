@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { getAllPahtMaps } from '@/interfaces/api';
 import { LearningLayout } from '@/components/layout/LearningLayout';
 import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
+import { Link } from "@/components/ui/Link"
+import { getAllPahtMaps } from '@/interfaces/api';
 import { vertexShader, fragmentShader, vertexShader02, fragmentShader02 } from "./shaders.ts";
 
 export const meta = {
@@ -25,7 +25,7 @@ export async function getStaticProps(context) {
 
 前回の記事「<Link href="/learning/preparation">シェーダーを描くための準備</Link>」で2種類のシェーダーを記述した。つまり**頂点シェーダー**と**フラグメントシェーダー**である。
 
-頂点シェーダーとフラグメントシェーダーの詳細については次の[MDNの記事](https://developer.mozilla.org/ja/docs/Games/Techniques/3D_on_the_web/GLSL_Shaders)を参照するとして、一応本記事でもざっくりと説明を書いておく。
+頂点シェーダーとフラグメントシェーダーの詳細については次の<Link href="https://developer.mozilla.org/ja/docs/Games/Techniques/3D_on_the_web/GLSL_Shaders">MDNの記事</Link>を参照するとして、一応本記事でもざっくりと説明を書いておく。
 
 頂点シェーダーはその名の通り、頂点に関する情報を扱うシェーダーであり `gl_Position` というGLSLの組み込み変数に値を格納する。頂点シェーダーでは頂点に関する様々な情報を扱うことができるが、必要不可欠な情報として**頂点の位置情報**がある。頂点シェーダーは各頂点に対し、1回ずつ実行される。
 
@@ -33,7 +33,7 @@ export async function getStaticProps(context) {
 
 ## 頂点シェーダーを書き換えてみる
 
-各々の役割がわかったところで、まずは頂点シェーダーを書き換えてみたい。「[WebGLProgram ーThree.js](https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram)」によると、頂点の位置は次のように計算できるらしい。
+各々の役割がわかったところで、まずは頂点シェーダーを書き換えてみたい。「<Link href="https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram">WebGLProgram ーThree.js</Link>」によると、頂点の位置は次のように計算できるらしい。
 
 ```glsl[data-label="vertexShader"]
 void main () {
@@ -112,4 +112,4 @@ void main () {
 
 ## 参考
 
-- [GLSL シェーダー - ゲーム開発 | MDN](https://developer.mozilla.org/ja/docs/Games/Techniques/3D_on_the_web/GLSL_Shaders)
+- <Link href="https://developer.mozilla.org/ja/docs/Games/Techniques/3D_on_the_web/GLSL_Shaders">GLSL シェーダー - ゲーム開発 | MDN</Link>

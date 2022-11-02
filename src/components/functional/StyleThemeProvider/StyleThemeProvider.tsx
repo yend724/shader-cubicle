@@ -5,9 +5,9 @@ export const theme = {
   spacing,
   mq,
 };
-type Props = {
+export type ThemeProps = {
   children: React.ReactNode;
 };
-export const StyleThemeProvider: React.FC<Props> = ({ children }) => {
+export const StyleThemeProvider: React.FC<ThemeProps> = ({ children }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };

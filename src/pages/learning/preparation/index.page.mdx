@@ -1,6 +1,7 @@
-import { getAllPahtMaps } from '@/interfaces/api';
 import { LearningLayout } from '@/components/layout/LearningLayout';
 import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
+import { Link } from "@/components/ui/Link"
+import { getAllPahtMaps } from '@/interfaces/api';
 import { vertexShader, fragmentShader } from "./shaders.ts";
 
 export const meta = {
@@ -24,7 +25,7 @@ export async function getStaticProps(context) {
 
 本記事ではシェーダーコードを描くための準備をする。
 
-シェーダーコードを描くにはいくつか選択肢があるが、本サイトでは基本的に[React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)を使用する。ざっくり以下のようなコードを書いている。
+シェーダーコードを描くにはいくつか選択肢があるが、本サイトでは基本的に<Link href="https://docs.pmnd.rs/react-three-fiber/getting-started/introduction">React Three Fiber</Link>を使用する。ざっくり以下のようなコードを書いている。
 
 ```tsx
 import { Canvas } from '@react-three/fiber';
@@ -60,8 +61,8 @@ return (
 
 マテリアルとジオメトリについては以下のドキュメントを参照。
 
-- [PlaneGeometry](https://threejs.org/docs/index.html?q=plane#api/en/geometries/PlaneGeometry)
-- [ShaderMaterial](https://threejs.org/docs/index.html?q=shader#api/en/materials/ShaderMaterial)
+- <Link href="https://threejs.org/docs/index.html?q=plane#api/en/geometries/PlaneGeometry">PlaneGeometry</Link>
+- <Link href="https://threejs.org/docs/index.html?q=shader#api/en/materials/ShaderMaterial">ShaderMaterial</Link>
 
 ## ハローワールドしてみる
 
@@ -107,5 +108,5 @@ void main () {
 
 ## 参考
 
-- [three.js docs](https://threejs.org/docs/)
-- [React Three Fiber Documentation](https://docs.pmnd.rs/react-three-fiber/api/canvas)
+- <Link href="https://threejs.org/docs/">three.js docs</Link>
+- <Link href="https://docs.pmnd.rs/react-three-fiber/api/canvas">React Three Fiber Documentation</Link>

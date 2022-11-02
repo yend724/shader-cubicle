@@ -1,4 +1,3 @@
-import { createElement } from 'react';
 import Link from 'next/link';
 import { css, Theme } from '@emotion/react';
 import { SITE_DATA } from '@/constants/site';

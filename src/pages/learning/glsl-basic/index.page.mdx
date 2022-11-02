@@ -1,7 +1,7 @@
-import Link from "next/link"
-import { getAllPahtMaps } from '@/interfaces/api';
 import { LearningLayout } from '@/components/layout/LearningLayout';
 import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
+import { Link } from "@/components/ui/Link"
+import { getAllPahtMaps } from '@/interfaces/api';
 import { vertexShader, fragmentShader } from "./shaders.ts";
 export const meta = {
   title: "GLSLの基礎的な書き方を確認する",
@@ -66,7 +66,7 @@ void main {
 
 `gl_Position`も`gl_FragColor`も`vec4型`、つまり4次元の浮動小数点ベクトルである。JavaScriptとは異なりGLSLは静的型付け言語なので、今扱っているデータの型が何なのかは常に意識する必要がある（JavaScriptでも型付けしないだけで意識しなくていいわけではない）。
 
-ここで「[WebGLProgram – three.js docs](https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram)」を確認する。「<Link href="/learning/vertex-and-fragment">前回の記事</Link>」でも軽く触れたが、Three.jsではビルドインでいくつかの変数が用意されている。ここまで[ShaderMaterial](https://threejs.org/docs/#api/en/materials/ShaderMaterial)を使用してきたので、あまり意識してこなかったが、ビルドインで用意されている変数の前に`uniform`や`attribute`といった修飾子がついているのがわかる（[RawShaderMaterial](https://threejs.org/docs/#api/en/materials/RawShaderMaterial)ではこの辺りの変数を自分で宣言する必要がある）。
+ここで「<Link href="https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram">WebGLProgram – three.js docs</Link>」を確認する。「<Link href="/learning/vertex-and-fragment">前回の記事</Link>」でも軽く触れたが、Three.jsではビルドインでいくつかの変数が用意されている。ここまで<Link href="https://threejs.org/docs/#api/en/materials/ShaderMaterial">ShaderMaterial</Link>を使用してきたので、あまり意識してこなかったが、ビルドインで用意されている変数の前に`uniform`や`attribute`といった修飾子がついているのがわかる（<Link href="https://threejs.org/docs/#api/en/materials/RawShaderMaterial">RawShaderMaterial</Link>ではこの辺りの変数を自分で宣言する必要がある）。
 
 `attribute`は頂点情報を受け取る変数を定義する修飾子であり、たとえば`position`はそれにあたる。頂点ごとに頂点情報を渡すので、`attribute`で宣言された変数は頂点ごとに**異なる値**を受け取ることができる。対して、`uniform`で宣言された変数はすべての頂点（フラグメントシェーダーならすべてのピクセル）で**共通の値**を受け取ることができる。`modelMatrix`や`viewMatrix`、`projectionMatrix`などの変換行列はすべての頂点で同様の行列なので、`uniform`で宣言されている。
 
@@ -112,7 +112,7 @@ void main () {
 
 ## 参考
 
-- [WebGLProgram – three.js docs](https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram)
-- [GLSL シェーダー - ゲーム開発 | MDN](https://developer.mozilla.org/ja/docs/Games/Techniques/3D_on_the_web/GLSL_Shaders)
-- [wgld.org | WebGL: シェーダの記述と基礎 |](https://wgld.org/d/webgl/w008.html)
-- [three.js超入門 第7回 シェーダーに変数を渡す - Qiita](https://qiita.com/watabo_shi/items/1b48ca54a9034f3614d8)
+- <Link href="https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram">WebGLProgram – three.js docs</Link>
+- <Link href="https://developer.mozilla.org/ja/docs/Games/Techniques/3D_on_the_web/GLSL_Shaders">GLSL シェーダー - ゲーム開発 | MDN</Link>
+- <Link href="https://wgld.org/d/webgl/w008.html">wgld.org | WebGL: シェーダの記述と基礎 |</Link>
+- <Link href="https://qiita.com/watabo_shi/items/1b48ca54a9034f3614d8">three.js超入門 第7回 シェーダーに変数を渡す - Qiita</Link>

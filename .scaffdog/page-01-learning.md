@@ -10,9 +10,10 @@ questions:
 # `{{ inputs.name }}/index.page.mdx`
 
 ```mdx
-import { getAllPahtMaps } from '@/interfaces/api';
 import { LearningLayout } from '@/components/layout/LearningLayout';
 import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
+import { Link } from "@/components/ui/Link"
+import { getAllPahtMaps } from '@/interfaces/api';
 import { vertexShader, fragmentShader } from "./shaders.ts";
 export const meta = {
   title: "タイトルが入ります",
