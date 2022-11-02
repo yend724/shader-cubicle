@@ -1,6 +1,6 @@
 export const SITE_DATA = {
   siteName: 'Shader Cubicle',
-  description: '最小限から始めるシェーダーコード集',
+  description: 'YENDの学習部屋',
   domain: 'shader-cubicle.yend.dev',
   author: 'YEND',
   github: 'https://github.com/yend724/shader-cubicle',
