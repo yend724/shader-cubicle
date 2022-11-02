@@ -1,14 +1,14 @@
 import { createElement } from 'react';
 import { useThree, ThreeElements } from '@react-three/fiber';
 
-export type MeshProps = {
+export type ShaderMeshProps = {
   mesh?: ThreeElements['mesh'];
-  geometry?: ThreeElements['planeGeometry'] | ThreeElements['boxGeometry'];
-  geomertyElement?: 'planeGeometry' | 'boxGeometry';
+  geometry?: ThreeElements['planeGeometry'];
+  geomertyElement?: 'planeGeometry';
   material?: ThreeElements['shaderMaterial'];
 };
 
-export const Mesh: React.FC<MeshProps> = ({
+export const ShaderMesh: React.FC<ShaderMeshProps> = ({
   mesh,
   geomertyElement = 'planeGeometry',
   geometry = { args: [2, 2, 64, 64] },

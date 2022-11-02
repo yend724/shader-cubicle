@@ -1,21 +1,17 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
+import { ShaderCanvas, ShaderCanvasProps } from '@/components/ui/ShaderCanvas';
 import { ShaderCodeMirror } from '@/components/ui/ShaderCodeMirror';
-import { Canvas } from '@react-three/fiber';
+import { ShaderMesh, ShaderMeshProps } from '@/components/ui/ShaderMesh';
 import { useShader } from './hooks';
-import { calcDistFromFov } from './utils';
-import { Mesh, MeshProps } from './Mesh';
 
-const canvasStyle = css`
-  width: 100%;
-  aspect-ratio: 1/1;
-`;
-const blockStyle = css`
-  margin-top: 1rem;
+const blockStyle = (theme: Theme) => css`
+  margin-top: ${theme.spacing(4)};
 `;
 
-type Props = MeshProps & {
+type Props = ShaderMeshProps & {
   vertexHidden?: boolean;
   fragmentHidden?: boolean;
+  canvas?: ShaderCanvasProps;
 };
 export const ShaderCanvasWithCodeMirror: React.FC<Props> = ({
   mesh,
@@ -24,6 +20,7 @@ export const ShaderCanvasWithCodeMirror: React.FC<Props> = ({
   material,
   vertexHidden = false,
   fragmentHidden = false,
+  canvas,
 }) => {
   const { shader: vShader, onChange: onVertexChange } = useShader(
     material?.vertexShader || ''
@@ -31,18 +28,11 @@ export const ShaderCanvasWithCodeMirror: React.FC<Props> = ({
   const { shader: fShader, onChange: onFragmentChange } = useShader(
     material?.fragmentShader || ''
   );
+
   return (
     <>
-      <Canvas
-        css={canvasStyle}
-        camera={{
-          fov: 60,
-          near: 0.1,
-          far: 1000,
-          position: [0, 0, calcDistFromFov(60)],
-        }}
-      >
-        <Mesh
+      <ShaderCanvas {...canvas}>
+        <ShaderMesh
           mesh={mesh}
           geometry={geometry}
           geomertyElement={geomertyElement}
@@ -52,7 +42,7 @@ export const ShaderCanvasWithCodeMirror: React.FC<Props> = ({
             fragmentShader: fShader,
           }}
         />
-      </Canvas>
+      </ShaderCanvas>
       {!vertexHidden && (
         <div css={blockStyle}>
           <ShaderCodeMirror
