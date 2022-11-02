@@ -1,0 +1,31 @@
+import { LearningLayout } from '@/components/layout/LearningLayout';
+import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
+import { Link } from "@/components/ui/Link"
+import { getAllPahtMaps } from '@/interfaces/api';
+import { vertexShader, fragmentShader } from "./shaders.ts";
+export const meta = {
+  title: "線形補間を使ったグラデーション",
+  published: "2022-11-02",
+  author: "YEND",
+  tag: ["頂点シェーダー", "フラグメントシェーダー"]
+}
+export default ({ children }) => {
+  return (
+    <LearningLayout meta={meta}>{children}</LearningLayout>
+  );
+};
+export async function getStaticProps(context) {
+  const pathMaps = await getAllPahtMaps();
+  return {
+    props: pathMaps,
+  };
+}
+
+線形補間を用いてグラデーションを実装してみる。
+
+<ShaderCanvasWithCodeMirror
+  material={{
+    vertexShader,
+    fragmentShader
+  }}
+/>
