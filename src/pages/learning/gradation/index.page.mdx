@@ -1,0 +1,98 @@
+import { LearningLayout } from '@/components/layout/LearningLayout';
+import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
+import { Link } from "@/components/ui/Link"
+import { getAllPahtMaps } from '@/interfaces/api';
+import { vertexShader, fragmentShader, vertexShader02, fragmentShader02 } from "./shaders.ts";
+export const meta = {
+  title: "グラデーションの実装",
+  published: "2022-11-12",
+  author: "YEND",
+  tag: ["頂点シェーダー", "フラグメントシェーダー"]
+}
+export default ({ children }) => {
+  return (
+    <LearningLayout meta={meta}>{children}</LearningLayout>
+  );
+};
+export async function getStaticProps(context) {
+  const pathMaps = await getAllPahtMaps();
+  return {
+    props: pathMaps,
+  };
+}
+
+今回はグラデーションの実装について考えてみる。
+
+前回までは`gl_FragColor`に固定の値を格納していた。つまりすべてのフラグメントシェーダーで同じ値を実行していたので、単色のオブジェクトがレンダリングされていた。
+
+一方でグラデーションを表現するためには、ピクセルごとに色を変える必要があるので、`gl_FragColor`に格納する値を変える必要がある。その値をどのように用意するのか。まずは`gl_FragCoord`について考えてみる。
+
+`gl_FragCoord`はGLSLの組み込み変数であり、対象となるピクセルの座標が入っている。`gl_FragCoord`は`vec4型`ではあるが、`gl_FragCoord.xy`とすれば、x座標とy座標が取得できる。たとえば一辺が500pxの正方形だとすると、左下が（0, 0）、右上が（500, 500）の値となる。この時**左下が原点**であることに注意する。
+
+では早速`gl_FragCoord`を使って、以下のように`fragmentShader`を実装してみる。黒から赤へのグラデーションが何回か繰り返されているのが確認できる。
+
+<ShaderCanvasWithCodeMirror
+  material={{
+    vertexShader,
+    fragmentShader
+  }}
+  vertexHidden
+/>
+
+先に`fract`について簡単に説明しておくと、`fract`はGLSLの組み込み関数で、`x - floor(x)`の計算をしてくれる関数である。「<Link href="https://thebookofshaders.com/glossary/?search=fract">The Book of Shaders: fract</Link>」を読むとイメージがつきやすい。ようは値を渡すと少数部分を返してくれる関数であり、たとえば`fract(1.5)`は`0.5`、`fract(2.3)`は`0.3`となる。
+
+```glsl[data-label="fragmentShader"]
+// gl_FragCoord.x にはピクセルのx座標が渡ってくる
+// 仮に横幅が 800px なら 0 ~ 800 の値が gl_FragCoord.x の範囲になる
+// fract(gl_FragCoord.x / 100.0) は 0 以上 1 未満
+float red = fract(gl_FragCoord.x / 100.0);
+```
+
+では上記では何をしているのだろうか。
+
+`gl_FragCoord.x`にはピクセルごとのx座標が渡ってくる。本記事では`Canvas`の横幅がそのまま横幅の値になるのだが、デバイスやブラウザの画面幅によって`Canvas`のサイズは異なる。一応本記事では`Canvas`が最大でも800pxになるようにコーディングしているので、`gl_FragCoord.x`の値は0 ~ 800の間である（デバイスや画面幅によっては最大値が小さくなる）。
+
+したがって`gl_FragCoord.x / 100.0`は0 ~ 8であり、`fract(gl_FragCoord.x / 100.0)`はx軸に基づいて、0以上1未満の値が100pxごとに、最大8回繰り返されることとなる。この値を`red`として`gl_FragColor`に格納しているので、グラデーションが繰り返される模様なった。
+
+次に`red = gl_FragCoord.x / Canvasの幅`としてグラデーションを実装したい。これができれば`red`は`Canvas`の幅に関係なく、左端が0、右端が1となる。つまり左から右にかけて、黒からだんだん赤になるグラデーションを実装できる。
+
+これを実現するためには、`uniform`を使ってJavaScriptからGLSLに`Canvas`の大きさを渡せば良いのだが、ここで「<Link href="https://threejs.org/docs/index.html#api/en/renderers/webgl/WebGLProgram">WebGLProgram – three.js docs</Link>」を読んでみる。
+
+頂点シェイダーには`attribute vec2 uv;`が定義されているのがわかる。これはThree.jsがビルドインで用意しているUV座標であり、まさに先ほど欲しかった`gl_FragCoord.x / Canvasの幅`の値に合致する。厳密言うとThree.jsにおけるUV座標は（x, y）の2次元座標であり、左下を原点（0, 0）として、右上が（1, 1）となる座標である。
+
+UV座標は頂点シェイダーにしか用意されていないので`varying`を使ってフラグメントシェイダーに渡す必要がある。
+
+<ShaderCanvasWithCodeMirror
+  material={{
+    vertexShader: vertexShader02,
+    fragmentShader: fragmentShader02
+  }}
+/>
+
+黒から赤に変化するグラデーションの実装ができた。簡単にコードをみてみる。
+
+```glsl[data-label="vertexShader"]
+varying vec2 vUv;
+
+void main () {
+  vUv = uv;
+  //...
+}
+```
+
+UV座標をフラグメントシェーダーに渡すために、頂点シェーダーで`varying vec2 vUv;`を宣言している。`main`の中で`uv`を`vUv`に格納した。
+
+```glsl[data-label="fragmentShader"]
+varying vec2 vUv;
+
+void main () {
+  float red =  vUv.x;
+  //...
+}
+```
+
+フラグメントシェーダーでも`varying vec2 vUv;`を宣言し、UV座標を受け取る。そのうちのx座標を`red`に代入しているので、x軸に基づいて黒から赤になるグラデーションとなった。
+
+## 参考
+
+- <Link href="https://wgld.org/d/webgl/w041.html">wgld.org | WebGL: ブラーフィルターによるぼかし処理 |</Link>
