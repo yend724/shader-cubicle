@@ -1,0 +1,145 @@
+import { LearningLayout } from '@/components/layout/LearningLayout';
+import { ShaderCanvasWithCodeMirror } from "@/components/ui/ShaderCanvasWithCodeMirror";
+import { Link } from "@/components/ui/Link"
+import { getAllPahtMaps } from '@/interfaces/api';
+import { vertexShader, fragmentShader, vertexShader02, fragmentShader02, vertexShader03, fragmentShader03 } from "./shaders.ts";
+export const meta = {
+  title: "線形補間を用いたグラデーションの実装",
+  published: "2022-11-12",
+  author: "YEND",
+  tag: ["フラグメントシェーダー"]
+}
+export default ({ children }) => {
+  return (
+    <LearningLayout meta={meta}>{children}</LearningLayout>
+  );
+};
+export async function getStaticProps(context) {
+  const pathMaps = await getAllPahtMaps();
+  return {
+    props: pathMaps,
+  };
+}
+
+前回の記事「<Link href="./gradation">グラデーションの実装</Link>」ではThree.jsのUV座標を使用してグラデーションを実装した。
+
+```glsl[data-label="fragmentShader"]
+varying vec2 vUv;
+
+void main () {
+  float red =  vUv.x;
+  gl_FragColor = vec4(red, 0.0, 0.0, 1.0);
+}
+```
+
+上記では黒から赤へのグラデーションであったが、今回は線形補間を利用して2色以上のグラデーションを実装してみる。
+
+線形補間に関しては「<Link href="https://zenn.dev/baroqueengine/books/a19140f2d9fc1a/viewer/1e4cc8">正規化・線形補間・マップ｜クリエイティブコーディングの教科書</Link>」をみるとわかりやすい。
+
+ついでに本記事でもざっくりと説明してみる。点aと点bがある時に、この2点を結ぶことを補間というわけだか、くわえて結んだ線が直線の時を線形補間という。この時の線分abは一次関数で表すことが可能だが（線形補間は1次補間とも呼ばれる）、GLSLにおいては`mix`を使うことで表現できる。
+
+`mix(a, b, t)`は、線分ab上を`t : 1 - t`に内分する点Tの位置を計算してくれることとなる。たとえば点aを`(0, 0)`、点bを`(4, 8)`とすれば以下のようになる。
+
+```
+点a = (0, 0)
+点b = (4, 8) とする
+
+// t = 0 の時
+mix(a, b, 0) = (0, 0)
+
+// t = 0.25 の時
+mix(a, b, 0.25) = (1, 2)
+
+// t = 0.5 の時
+mix(a, b, 1) = (2, 4)
+
+// t = 1 の時
+mix(a, b, 1) = (4, 8)
+```
+
+## 2色の線形補間
+
+上記を踏まえてから、赤から青に変化するグラデーションを実装してみる。
+
+<ShaderCanvasWithCodeMirror
+  material={{
+    vertexShader,
+    fragmentShader
+  }}
+  vertexHidden
+/>
+
+## 3色の線形補間
+
+次に赤から緑、緑から青になるように実装してみる。
+
+<ShaderCanvasWithCodeMirror
+  material={{
+    vertexShader: vertexShader02,
+    fragmentShader: fragmentShader02
+  }}
+  vertexHidden
+/>
+
+##
+
+上記のコードはざっくり以下のような感じである。
+
+```glsl[data-label="glsl"]
+// 赤、緑、青のvec3型の配列を宣言
+vec3 red = vec3(1.0, 0.0, 0.0);
+vec3 green = vec3(0.0, 1.0, 0.0);
+vec3 blue = vec3(0.0, 0.0, 1.0);
+vec3[3] rgb = vec3[](
+  red, green, blue
+);
+
+// [0 ~ 1]を[0 ~ 2]に変換する
+float doubleUv = vUv.x * 2.0;
+
+// 配列のindexはint型である必要がある
+int index = doubleUv < 1.0 ? 0 : 1;
+
+// doubleUvが[0 ~ 2]なのでfractは0以上1未満を2回繰り返す
+// →赤から緑、緑から赤
+vec3 mixed = mix(rgb[index], rgb[index+1], fract(doubleUv));
+//...
+```
+
+## 4色のバイリニア補間（双線形補間）
+
+最後に上下左右の4色でグラデーションするためにバイリニア補間（双線形補間）というものを使ってみる。
+
+<ShaderCanvasWithCodeMirror
+  material={{
+    vertexShader: vertexShader03,
+    fragmentShader: fragmentShader03
+  }}
+  vertexHidden
+/>
+
+バイリニア補間についてはあまり理解しきれていないので、本記事では詳しく触れないが（かわり<Link href="https://risalc.info/src/linear-bilinear-interporation.html">参考</Link>を載せておく）、以下のようなコードを書いている。
+
+```glsl[data-label="fragmentShader"]
+// 4色の宣言
+vec3 red = vec3(1.0, 0.0, 0.0);
+vec3 green = vec3(0.0, 1.0, 0.0);
+vec3 blue = vec3(0.0, 0.0, 1.0);
+vec3 yellow = vec3(1.0, 1.0, 0.0);
+
+// 上半分でx軸方向に線形補間（赤→緑）
+vec3 mixedTop = mix(red, green, vUv.x);
+
+// 上半分でx軸方向に線形補間（青→黄色）
+vec3 mixedBottom = mix(blue, yellow, vUv.x);
+
+// y軸方向にmixedTopとmixedBottomを線形補間
+// y軸は下が0で上が1となることに気をつける
+vec3 mixed = mix(mixedBottom, mixedTop, vUv.y);
+```
+
+# 参考
+
+- <Link href="https://r-ngtm.hatenablog.com/entry/2021/01/16/154813">【シェーダー】バイリニア補間で4色グラデーションを作る - rn.log</Link>
+- <Link href="https://zenn.dev/baroqueengine/books/a19140f2d9fc1a/viewer/1e4cc8">正規化・線形補間・マップ｜クリエイティブコーディングの教科書</Link>
+- <Link href="https://risalc.info/src/linear-bilinear-interporation.html">線形補間と双線形補間 ～解説と具体例～   - 理数アラカルト -</Link>
