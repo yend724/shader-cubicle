@@ -1,8 +1,7 @@
 import { css } from '@emotion/react';
 import { SITE_DATA } from '@/constants/site';
-
-const Now = new Date();
-const NowYear = Now.getFullYear();
+import { date } from '@/utils/date';
+const { year } = date();
 
 const footerStyle = css`
   display: flex;
@@ -17,7 +16,7 @@ export const Footer = () => {
   return (
     <footer css={footerStyle}>
       <small css={textStyle}>
-        &copy;{NowYear} {SITE_DATA.author}
+        &copy;{year} {SITE_DATA.author}
       </small>
     </footer>
   );

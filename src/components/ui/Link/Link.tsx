@@ -1,17 +1,12 @@
 import NextLink from 'next/link';
 import { css } from '@emotion/react';
+import { isExternalLink } from './utils';
 
 const linkStyle = css`
   &[data-td-ul='true'] {
     text-decoration: underline;
   }
 `;
-
-const regex = new RegExp(/^https?:\/\//);
-const isExternalLink = (url: string) => {
-  return regex.test(url);
-};
-
 export type LinkProps = {
   underline?: boolean;
   href: string;
