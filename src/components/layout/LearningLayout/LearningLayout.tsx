@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { css, Theme } from '@emotion/react';
-import { Header } from '@/components/ui/Header';
-import { Footer } from '@/components/ui/Footer';
-import { TwitterShareLink } from '@/components/ui/TwitterShareLink';
-import { Tag } from '@/components/ui/Tag';
-import { LearningHead } from '@/components/feature/learning/LearningHead';
 import { LearningDate } from '@/components/feature/learning/LearningDate';
+import { LearningHead } from '@/components/feature/learning/LearningHead';
 import { LearningPager } from '@/components/feature/learning/LearningPager';
+import { Footer } from '@/components/ui/Footer';
+import { Header } from '@/components/ui/Header';
+import { Tag } from '@/components/ui/Tag';
+import { TwitterShareLink } from '@/components/ui/TwitterShareLink';
 import { useMinimalViewPort } from '@/hooks/useMinimalViewPort';
 import { SITE_DATA } from '@/constants/site';
 

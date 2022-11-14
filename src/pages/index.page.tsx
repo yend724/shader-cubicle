@@ -2,11 +2,11 @@ import type { NextPageWithLayout } from 'next';
 import Link from 'next/link';
 import { css, Theme } from '@emotion/react';
 import { TopLayout } from '@/components/layout/TopLayout';
-import { Tag } from '@/components/ui/Tag';
 import { LearningDate } from '@/components/feature/learning/LearningDate';
-import { SITE_DATA } from '@/constants/site';
-import { LEAENING_PATH } from '@/constants/path';
+import { Tag } from '@/components/ui/Tag';
 import { getAllPahtMaps } from '@/interfaces/api';
+import { LEAENING_PATH } from '@/constants/path';
+import { SITE_DATA } from '@/constants/site';
 
 const containerStyle = css`
   max-width: var(--max-width-main);
@@ -64,7 +64,7 @@ const Home: NextPageWithLayout<Props> = ({ pathMaps }) => {
     <div css={containerStyle}>
       <p css={labelStyle}>Latest</p>
       <div css={listStyle}>
-        {LEAENING_PATH.map(p => {
+        {LEAENING_PATH.map((p) => {
           const { path } = p;
           const { meta } = pathMaps[path];
           const { title, tag, published, updated } = meta;

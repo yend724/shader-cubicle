@@ -1,7 +1,7 @@
 import { css, Theme } from '@emotion/react';
-import { Header } from '@/components/ui/Header';
-import { Footer } from '@/components/ui/Footer';
 import { HomeHead } from '@/components/feature/home/HomeHead';
+import { Footer } from '@/components/ui/Footer';
+import { Header } from '@/components/ui/Header';
 import { useMinimalViewPort } from '@/hooks/useMinimalViewPort';
 
 const WrapperStyle = css`

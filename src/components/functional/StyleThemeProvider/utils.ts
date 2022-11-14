@@ -5,7 +5,7 @@ type Spaceing = {
   (param1: number, param2: number, param3: number, param4: number): string;
 };
 export const spacing: Spaceing = (...params: number[]): string => {
-  const rems = params.map(param => `${param * 0.25}rem`);
+  const rems = params.map((param) => `${param * 0.25}rem`);
   return rems.join(' ');
 };
 

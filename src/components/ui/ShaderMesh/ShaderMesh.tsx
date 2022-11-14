@@ -49,7 +49,7 @@ export const ShaderMesh: React.FC<ShaderMeshProps> = ({
       <shaderMaterial
         {...material}
         ref={ref}
-        onUpdate={v => {
+        onUpdate={(v) => {
           if (v.isShaderMaterial) {
             gl.compile(scene, camera);
           }

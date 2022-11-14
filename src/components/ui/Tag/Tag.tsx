@@ -17,7 +17,7 @@ type Props = { tag: string[] };
 export const Tag: React.FC<Props> = ({ tag }) => {
   return (
     <ul css={tagsStyle}>
-      {tag.map(t => (
+      {tag.map((t) => (
         <li key={t} css={tagStyle}>
           {t}
         </li>

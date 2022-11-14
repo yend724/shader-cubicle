@@ -1,4 +1,80 @@
 {
-  "extends": "next/core-web-vitals",
-  "ignorePatterns": ["*.config.js"]
+  "extends": ["next", "next/core-web-vitals", "prettier"],
+  "ignorePatterns": ["*.config.js"],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        // グループごとの並び順
+        "groups": [
+          "builtin", // node "builtin" のモジュール
+          "external", // npm install したパッケージ
+          "internal", // パス設定したモジュール
+          ["parent", "sibling"], // 親階層と子階層のファイル
+          "object", // object-imports
+          "index", // 同階層のファイル
+          "type" // 型だけをインポートする,
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "builtin",
+            "position": "after"
+          },
+          {
+            "pattern": "next",
+            "group": "builtin",
+            "position": "after"
+          },
+          {
+            "pattern": "next/**",
+            "group": "builtin",
+            "position": "after"
+          },
+          {
+            "pattern": "@/components/layout/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/components/feature/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/components/ui/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/components/functional/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/hooks/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/utils/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/interfaces/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/constants/**",
+            "group": "internal",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "next", "next/**"],
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ]
+  }
 }

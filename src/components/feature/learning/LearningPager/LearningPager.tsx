@@ -29,7 +29,7 @@ type Props = {
 };
 export const LearningPager: React.FC<Props> = ({ currentPagePath }) => {
   const current = currentPagePath.replace('/learning/', '');
-  const currentIndex = LEAENING_PATH.findIndex(v => v.path === current);
+  const currentIndex = LEAENING_PATH.findIndex((v) => v.path === current);
   const pathLastIndex = LEAENING_PATH.length - 1;
 
   return (

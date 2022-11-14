@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
-import { SITE_DATA } from '@/constants/site';
 import { date } from '@/utils/date';
+import { SITE_DATA } from '@/constants/site';
 const { year } = date();
 
 const footerStyle = css`

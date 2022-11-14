@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Canvas, RenderProps } from '@react-three/fiber';
-import type { Options as ResizeOptions } from 'react-use-measure';
 import { calcDistFromFov } from './utils';
+import type { Options as ResizeOptions } from 'react-use-measure';
 
 const canvasStyle = css`
   width: 100%;

@@ -17,12 +17,12 @@ type Post = {
 export const getAllPahtMaps = async () => {
   const directoryNames = readdirSync(postsDirectory);
   const pathMaps = await Promise.all(
-    directoryNames.map(async directory => {
+    directoryNames.map(async (directory) => {
       const post: Post =
         await require(`src/pages/learning/${directory}/index.page.mdx`);
       return { meta: post.meta, path: directory };
     })
-  ).then(values => {
+  ).then((values) => {
     const pathMap: Record<string, Post> = values.reduce((acc, cur) => {
       const map = {
         [cur.path]: {
